@@ -5,6 +5,9 @@
 Disponibilizar uma URL pública para apresentar a evolução do SECC sem expor administração, banco local,
 planilha oficial, uploads, evidências ou credenciais.
 
+**Produção:** `https://secc-app.vercel.app`  
+**Repositório:** `https://github.com/LeandroCRafael/secc-app`
+
 ## Ambientes
 
 - **Local:** aplicação completa de desenvolvimento, PostgreSQL em Docker e curadoria demonstrativa.

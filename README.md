@@ -27,6 +27,8 @@ A versão de produção é uma vitrine segura do trabalho em andamento. Ela publ
 e a visão `/construindo`, mas remove o acesso à curadoria e redireciona `/admin`. Banco PostgreSQL,
 planilha, uploads e filesystem privado permanecem exclusivamente locais nesta etapa.
 
+URL permanente da prévia: [secc-app.vercel.app](https://secc-app.vercel.app).
+
 O fluxo de GitHub e Vercel está documentado em `docs/PUBLICACAO_CONTINUA.md`.
 
 ## PostgreSQL local

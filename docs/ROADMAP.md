@@ -66,9 +66,9 @@ assíncrono permanecem nas fases seguintes.
 - revisar conteúdo, arquivos e variáveis do repositório público — **concluído para a prévia inicial**;
 - inicializar o Git dentro de `secc-app/` — **concluído**;
 - criar o repositório no GitHub — **concluído: `LeandroCRafael/secc-app`**;
-- configurar serviços e ambientes na Vercel;
-- publicar a versão inicial;
-- documentar atualização, monitoramento e rollback.
+- configurar serviços e ambientes na Vercel — **concluído para a prévia pública sem backend operacional**;
+- publicar a versão inicial — **concluído em `https://secc-app.vercel.app`**;
+- documentar atualização, monitoramento e rollback — **fluxo inicial documentado; observabilidade evolutiva pendente**.
 
 ## Fase 7 — Metodologia de score
 
