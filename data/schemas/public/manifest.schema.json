@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://secc.example/schemas/public/manifest-v1.json",
+  "title": "SECC Public Manifest v1",
+  "type": "object",
+  "required": ["version", "referenceDate", "generatedAt", "releaseId", "counts", "hashes", "limitations"],
+  "properties": {
+    "version": { "type": "string" },
+    "referenceDate": { "type": "string", "format": "date" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "releaseId": { "type": "string" },
+    "counts": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+    "hashes": { "type": "object", "additionalProperties": { "type": "string", "pattern": "^[a-f0-9]{64}$" } },
+    "limitations": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

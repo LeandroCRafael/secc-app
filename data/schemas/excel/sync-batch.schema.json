@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://secc.example/schemas/excel/sync-batch-v1.json",
+  "title": "SECC Excel Sync Batch v1",
+  "type": "object",
+  "required": ["syncBatchId", "idempotencyKey", "workbookId", "sourceWorkbookVersion", "mappingVersion", "approvedRevisionIds"],
+  "properties": {
+    "syncBatchId": { "type": "string", "minLength": 1 },
+    "idempotencyKey": { "type": "string", "minLength": 8 },
+    "workbookId": { "type": "string", "minLength": 1 },
+    "sourceWorkbookVersion": { "type": "string", "minLength": 1 },
+    "mappingVersion": { "type": "string", "minLength": 1 },
+    "approvedRevisionIds": { "type": "array", "uniqueItems": true, "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

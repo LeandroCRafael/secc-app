@@ -1,0 +1,3 @@
+import { demoAudit } from "@/features/demo/data";
+export const metadata = { title: "Auditoria" };
+export default function AuditPage() { return <><header className="admin-title"><p className="eyebrow">Trilha imutável · demo</p><h1>Cada mudança explica quem, quando e por quê.</h1></header><div className="table-wrap"><table><thead><tr><th>Evento</th><th>Entidade</th><th>Autor</th><th>Versão</th><th>Justificativa</th></tr></thead><tbody>{demoAudit.map((event) => <tr key={event.id}><td className="mono">{event.action}</td><td>{event.entityId}</td><td>{event.actorId}</td><td>{event.previousVersion ?? "—"} → {event.resultingVersion}</td><td>{event.reason}</td></tr>)}</tbody></table></div></>; }

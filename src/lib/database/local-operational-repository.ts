@@ -1,0 +1,29 @@
+import type { AuditEvent, Company, Proposal, ReviewDecision } from "@/types/domain";
+import type { OperationalRepository } from "@/types/contracts";
+
+export class LocalOperationalRepository implements OperationalRepository {
+  constructor(private readonly companies: Company[] = [], private readonly proposals: Proposal[] = [], private readonly audits: AuditEvent[] = []) {}
+  async listCompanies() { return structuredClone(this.companies); }
+  async listProposals() { return structuredClone(this.proposals); }
+  async createCompany(company: Company, audit: AuditEvent) {
+    if (this.companies.some((item) => item.id === company.id || item.slug === company.slug)) throw new Error("Empresa já existe.");
+    this.companies.push(structuredClone(company));
+    this.audits.push(structuredClone(audit));
+  }
+  async submitProposal(proposal: Proposal, audit: AuditEvent) {
+    if (this.proposals.some((item) => item.id === proposal.id)) throw new Error("Controle otimista: proposta já existe.");
+    this.proposals.push(structuredClone(proposal));
+    this.audits.push(structuredClone(audit));
+  }
+  async saveProposal(proposal: Proposal) {
+    if (this.proposals.some((item) => item.id === proposal.id)) throw new Error("Controle otimista: proposta já existe.");
+    this.proposals.push(structuredClone(proposal));
+  }
+  async decide(decision: ReviewDecision) {
+    const proposal = this.proposals.find((item) => item.id === decision.proposalId);
+    if (!proposal) throw new Error("Proposta não encontrada.");
+    proposal.status = decision.decision === "changes_requested" ? "under_review" : decision.decision;
+    proposal.version += 1;
+  }
+  async appendAudit(event: AuditEvent) { this.audits.push(structuredClone(event)); }
+}

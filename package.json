@@ -1,0 +1,43 @@
+{
+  "name": "secc-app",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "db:up": "docker compose --env-file .env.docker up -d postgres",
+    "db:down": "docker compose --env-file .env.docker down",
+    "db:logs": "docker compose --env-file .env.docker logs -f postgres",
+    "db:status": "docker compose --env-file .env.docker ps",
+    "db:check": "node --env-file=.env.local scripts/check-database.mjs",
+    "db:migrate": "node --env-file=.env.local scripts/migrate-database.mjs",
+    "db:schema:check": "node --env-file=.env.local scripts/check-database-schema.mjs",
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "next": "16.2.10",
+    "postgres": "3.4.9",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.2",
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.2.10",
+    "prettier": "3.9.5",
+    "tailwindcss": "4.3.2",
+    "typescript": "5.9.3",
+    "vitest": "4.1.10"
+  }
+}

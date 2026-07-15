@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://secc.example/schemas/imports/structured-upload-v1.json",
+  "title": "SECC Structured Upload v1",
+  "type": "object",
+  "required": ["origin", "schemaVersion", "fileHash", "receivedAt", "receivedBy", "rows"],
+  "properties": {
+    "origin": { "enum": ["csv", "xlsx", "official_excel"] },
+    "schemaVersion": { "const": "1.0.0" },
+    "fileHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "receivedAt": { "type": "string", "format": "date-time" },
+    "receivedBy": { "type": "string", "minLength": 1 },
+    "rows": { "type": "array", "items": { "$ref": "../operational/proposal.schema.json" } }
+  },
+  "additionalProperties": false
+}

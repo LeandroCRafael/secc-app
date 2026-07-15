@@ -1,0 +1,3 @@
+import { StatusBadge } from "@/components/ui/status-badge";
+export const metadata = { title: "Conflitos" };
+export default function ConflictsPage() { return <><header className="admin-title"><p className="eyebrow">Controle de concorrência</p><h1>Divergências nunca são sobrescritas silenciosamente.</h1></header><section className="card"><div className="split"><div><h3>Versão fictícia do workbook</h3><p>Esperada: <span className="mono">demo-v1</span> · encontrada: <span className="mono">demo-v2</span></p></div><StatusBadge status="conflicted"/></div><p className="notice">A sincronização permanece bloqueada até uma decisão explícita do revisor.</p></section></>; }

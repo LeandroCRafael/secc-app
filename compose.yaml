@@ -1,0 +1,28 @@
+name: secc-local
+
+services:
+  postgres:
+    image: postgres:18.4-alpine
+    container_name: secc-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: secc
+      POSTGRES_USER: secc_app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD no arquivo .env.docker}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - secc_postgres_data:/var/lib/postgresql
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U secc_app -d secc"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  secc_postgres_data:
+    name: secc_postgres_data
