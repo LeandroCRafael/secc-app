@@ -38,6 +38,18 @@ type ProposalRow = {
   source_collected_at: string;
 };
 
+type AuditRow = {
+  id: string;
+  action: string;
+  entity_id: string;
+  actor_id: string;
+  occurred_at: Date;
+  previous_version: number | null;
+  resulting_version: number;
+  reason: string;
+  origin: AuditEvent["origin"];
+};
+
 function mapCompany(row: CompanyRow): Company {
   return {
     id: row.id,
@@ -105,6 +117,26 @@ export class PostgresOperationalRepository implements OperationalRepository {
     return rows.map(mapProposal);
   }
 
+  async listAuditEvents(): Promise<AuditEvent[]> {
+    const rows = await getDatabase()<AuditRow[]>`
+      select id, action, entity_id, actor_id, occurred_at, previous_version,
+        resulting_version, reason, origin
+      from audit_events
+      order by occurred_at desc, id desc
+    `;
+    return rows.map((row) => ({
+      id: row.id,
+      action: row.action,
+      entityId: row.entity_id,
+      actorId: row.actor_id,
+      occurredAt: row.occurred_at.toISOString(),
+      previousVersion: row.previous_version,
+      resultingVersion: row.resulting_version,
+      reason: row.reason,
+      origin: row.origin,
+    }));
+  }
+
   async createCompany(company: Company, audit: AuditEvent): Promise<void> {
     const sql = getDatabase();
     try {
@@ -163,28 +195,22 @@ export class PostgresOperationalRepository implements OperationalRepository {
   async decide(decision: ReviewDecision): Promise<void> {
     const sql = getDatabase();
     await sql.begin(async (transaction) => {
-      const rows = await transaction<{ version: number }[]>`
-        select version from proposals where id = ${decision.proposalId} for update
-      `;
-      const current = rows[0];
-      if (!current) throw new Error("Proposta não encontrada.");
+      await this.applyDecision(transaction, decision);
+    });
+  }
 
-      const status = decision.decision === "changes_requested" ? "under_review" : decision.decision;
-      const nextVersion = current.version + 1;
-      await transaction`
-        update proposals
-        set status = ${status}, version = ${nextVersion}, updated_at = ${decision.decidedAt}
-        where id = ${decision.proposalId}
-      `;
-      await transaction`
-        insert into review_decisions (
-          proposal_id, decision, justification, decided_by, decided_at,
-          previous_version, resulting_version
-        ) values (
-          ${decision.proposalId}, ${decision.decision}, ${decision.justification},
-          ${decision.decidedBy}, ${decision.decidedAt}, ${current.version}, ${nextVersion}
-        )
-      `;
+  async decideProposal(decision: ReviewDecision, audit: AuditEvent): Promise<void> {
+    const sql = getDatabase();
+    await sql.begin(async (transaction) => {
+      const versions = await this.applyDecision(transaction, decision);
+      if (
+        audit.entityId !== decision.proposalId ||
+        audit.previousVersion !== versions.previous ||
+        audit.resultingVersion !== versions.resulting
+      ) {
+        throw new Error("Evento de auditoria incompatível com a decisão.");
+      }
+      await this.insertAudit(transaction, audit);
     });
   }
 
@@ -217,6 +243,36 @@ export class PostgresOperationalRepository implements OperationalRepository {
         ${proposal.publishAuthorized}
       )
     `;
+  }
+
+  private async applyDecision(
+    transaction: TransactionSql,
+    decision: ReviewDecision,
+  ): Promise<{ previous: number; resulting: number }> {
+    const rows = await transaction<{ version: number }[]>`
+      select version from proposals where id = ${decision.proposalId} for update
+    `;
+    const current = rows[0];
+    if (!current) throw new Error("Proposta não encontrada.");
+    if (current.version !== decision.expectedVersion) throw new Error("Conflito de versão da proposta.");
+
+    const status = decision.decision === "changes_requested" ? "under_review" : decision.decision;
+    const nextVersion = current.version + 1;
+    await transaction`
+      update proposals
+      set status = ${status}, version = ${nextVersion}, updated_at = ${decision.decidedAt}
+      where id = ${decision.proposalId}
+    `;
+    await transaction`
+      insert into review_decisions (
+        proposal_id, decision, justification, decided_by, decided_at,
+        previous_version, resulting_version
+      ) values (
+        ${decision.proposalId}, ${decision.decision}, ${decision.justification},
+        ${decision.decidedBy}, ${decision.decidedAt}, ${current.version}, ${nextVersion}
+      )
+    `;
+    return { previous: current.version, resulting: nextVersion };
   }
 
   private async insertAudit(transaction: TransactionSql, event: AuditEvent): Promise<void> {

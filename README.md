@@ -61,8 +61,8 @@ npm run build
 
 - rotas públicas `/`, `/empresas`, `/empresas/[slug]`, `/comparar`, `/metodologia`, `/dados` e `/sobre`;
 - área de curadoria em `/admin`, protegida por adaptador local explicitamente demo;
-- formulário manual validado por schema e fila de revisão demonstrativa;
-- aprovação/rejeição, evento de auditoria e prévia de release apenas com registros elegíveis;
+- formulário manual validado por schema e fila de revisão persistida no PostgreSQL;
+- aprovação/rejeição com justificativa, versão esperada e auditoria atômica; prévia de release ainda demonstrativa;
 - upload local de CSV/XLSX com allowlist, limite, MIME e assinatura, sem persistência;
 - adaptador Excel local com backup planejado, conflito otimista e idempotência;
 - contratos separados entre domínio operacional, importação, Excel e publicação.
@@ -73,8 +73,8 @@ npm run build
 
 ## Limitações deliberadas
 
-- a autenticação, a fila visual de revisão e a aprovação ainda usam adaptadores demo; cadastro de empresa
-  e envio de proposta já persistem no PostgreSQL, sempre como privado ou em revisão;
+- a autenticação ainda usa adaptador local de um único administrador; cadastro, proposta, revisão e
+  auditoria já persistem no PostgreSQL, sempre separados da publicação;
 - o adaptador Excel é simulado e não acessa qualquer planilha;
 - o estado interativo da demonstração é volátil e reinicia ao recarregar;
 - o GitHub contém apenas a fronteira pública sanitizada; o deploy não habilita serviços operacionais;

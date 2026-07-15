@@ -11,7 +11,7 @@ const stages = [
     title: "Qualidade e governança",
     status: "Base entregue",
     text: "Schemas, estados de ausência, fontes, revisão humana, controle de versão e auditoria preservam o contexto de cada dado.",
-    items: ["Validação no servidor", "Auditoria append-only", "Fila de revisão em integração"],
+    items: ["Validação no servidor", "Auditoria append-only", "Fila de revisão consolidada"],
   },
   {
     number: "03",

@@ -25,7 +25,7 @@ Status: concluída nesta rodada.
 - configurar autenticação e papéis — **decidido: somente administrador na etapa local**;
 - provisionar banco relacional compatível com Postgres — **concluído: PostgreSQL 18.4 local em Docker, com conexão server-only validada**;
 - provisionar armazenamento privado de arquivos — **decidido: filesystem local privado; estrutura criada**;
-- implementar empresas, períodos, dados, fontes, revisões e trilha de auditoria — **schema inicial e repositório concluídos; integração das ações pendente**;
+- implementar empresas, períodos, dados, fontes, revisões e trilha de auditoria — **núcleo operacional consolidado no PostgreSQL**;
 - separar rotas públicas e protegidas — **fundação demo concluída; entrada manual protegida e persistente; provedor real pendente**.
 
 Marco de 15/07/2026: fundação vertical local entregue com rotas, contratos, fluxo fictício de proposta,
@@ -40,7 +40,7 @@ assíncrono permanecem nas fases seguintes.
 - receber XLSX e CSV estruturados;
 - armazenar documentos-fonte como evidência;
 - validar, mapear e apresentar prévia antes da importação;
-- implementar fila de revisão, conflitos, aprovação e rejeição;
+- implementar fila de revisão, conflitos, aprovação e rejeição — **fila, aprovação e rejeição concluídas; tratamento especializado de conflitos pendente**;
 - impedir publicação automática de qualquer upload.
 
 ## Fase 4 — Sincronização com Excel

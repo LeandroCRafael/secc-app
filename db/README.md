@@ -32,3 +32,7 @@ aplicadas. A tabela de auditoria possui bloqueio de `UPDATE` e `DELETE` no próp
 
 As operações `createCompany` e `submitProposal` do repositório PostgreSQL gravam o registro de domínio
 e seu evento de auditoria na mesma transação. Falha em qualquer etapa desfaz todo o lote.
+
+`decideProposal` bloqueia a proposta durante a decisão, compara a versão esperada e grava a decisão,
+a nova versão e a auditoria na mesma transação. A fila e a página de auditoria leem diretamente desse
+repositório.

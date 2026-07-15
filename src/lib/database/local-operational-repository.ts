@@ -5,6 +5,7 @@ export class LocalOperationalRepository implements OperationalRepository {
   constructor(private readonly companies: Company[] = [], private readonly proposals: Proposal[] = [], private readonly audits: AuditEvent[] = []) {}
   async listCompanies() { return structuredClone(this.companies); }
   async listProposals() { return structuredClone(this.proposals); }
+  async listAuditEvents() { return structuredClone(this.audits).sort((a, b) => b.occurredAt.localeCompare(a.occurredAt)); }
   async createCompany(company: Company, audit: AuditEvent) {
     if (this.companies.some((item) => item.id === company.id || item.slug === company.slug)) throw new Error("Empresa já existe.");
     this.companies.push(structuredClone(company));
@@ -22,8 +23,17 @@ export class LocalOperationalRepository implements OperationalRepository {
   async decide(decision: ReviewDecision) {
     const proposal = this.proposals.find((item) => item.id === decision.proposalId);
     if (!proposal) throw new Error("Proposta não encontrada.");
+    if (proposal.version !== decision.expectedVersion) throw new Error("Conflito de versão da proposta.");
     proposal.status = decision.decision === "changes_requested" ? "under_review" : decision.decision;
     proposal.version += 1;
+  }
+  async decideProposal(decision: ReviewDecision, audit: AuditEvent) {
+    const proposal = this.proposals.find((item) => item.id === decision.proposalId);
+    if (!proposal) throw new Error("Proposta não encontrada.");
+    if (proposal.version !== decision.expectedVersion) throw new Error("Conflito de versão da proposta.");
+    proposal.status = decision.decision === "changes_requested" ? "under_review" : decision.decision;
+    proposal.version += 1;
+    this.audits.push(structuredClone(audit));
   }
   async appendAudit(event: AuditEvent) { this.audits.push(structuredClone(event)); }
 }

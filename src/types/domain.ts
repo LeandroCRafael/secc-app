@@ -73,6 +73,7 @@ export interface Proposal {
 
 export interface ReviewDecision {
   proposalId: string;
+  expectedVersion: number;
   decision: "approved" | "rejected" | "changes_requested";
   justification: string;
   decidedBy: string;
