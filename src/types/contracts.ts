@@ -1,7 +1,8 @@
-import type { AuditEvent, Company, Proposal, ReviewDecision } from "./domain";
+import type { AuditEvent, Company, CompanyDiagnostic, Proposal, ReviewDecision, WorkbookSnapshot } from "./domain";
 
 export interface OperationalRepository {
   listCompanies(): Promise<Company[]>;
+  listCompanyDiagnostics(): Promise<CompanyDiagnostic[]>;
   listProposals(): Promise<Proposal[]>;
   listAuditEvents(): Promise<AuditEvent[]>;
   createCompany(company: Company, audit: AuditEvent): Promise<void>;
@@ -10,6 +11,9 @@ export interface OperationalRepository {
   decide(decision: ReviewDecision): Promise<void>;
   decideProposal(decision: ReviewDecision, audit: AuditEvent): Promise<void>;
   appendAudit(event: AuditEvent): Promise<void>;
+  synchronizeWorkbook(snapshot: WorkbookSnapshot, audit: AuditEvent): Promise<void>;
+  linkCvmCompany(companyId: string, cnpj: string, cvmCode: string, audit: AuditEvent): Promise<void>;
+  submitProposals(proposals: Proposal[], audit: AuditEvent): Promise<number>;
 }
 
 export interface PublicationRelease {

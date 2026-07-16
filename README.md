@@ -1,8 +1,9 @@
 # SECC App
 
 Fundação técnica navegável do SECC, uma plataforma acadêmica e informacional para organizar
-evidências de empresas brasileiras em estresse e reestruturação. A versão atual usa somente dados
-fictícios marcados como demonstração. Não apresenta score, rating ou probabilidade de default.
+evidências de empresas brasileiras em estresse e reestruturação. A área pública usa dados
+fictícios marcados como demonstração; a área local protegida pode ler a planilha mestre sem publicar
+seus dados. Não apresenta score, rating ou probabilidade de default.
 
 ## Pré-requisitos
 
@@ -61,10 +62,15 @@ npm run build
 
 - rotas públicas `/`, `/empresas`, `/empresas/[slug]`, `/comparar`, `/metodologia`, `/dados` e `/sobre`;
 - área de curadoria em `/admin`, protegida por adaptador local explicitamente demo;
+- diagnóstico por empresa calculado diretamente da planilha mestre, com cobertura financeira,
+  qualitativa e de mercado persistida sem copiar os valores para a área pública;
+- pesquisa no cadastro oficial da CVM e coleta de um exercício da DFP em propostas idempotentes,
+  sempre submetidas à fila de revisão;
 - formulário manual validado por schema e fila de revisão persistida no PostgreSQL;
 - aprovação/rejeição com justificativa, versão esperada e auditoria atômica; prévia de release ainda demonstrativa;
 - upload local de CSV/XLSX com allowlist, limite, MIME e assinatura, sem persistência;
-- adaptador Excel local com backup planejado, conflito otimista e idempotência;
+- intercâmbio local com leitura de XLSX, backup da origem, staging de propostas aprovadas,
+  deduplicação por proposta e download de uma nova versão para conferência;
 - contratos separados entre domínio operacional, importação, Excel e publicação.
 - schema PostgreSQL versionado e repositório operacional server-only para empresas, propostas,
   decisões e auditoria.
@@ -75,8 +81,9 @@ npm run build
 
 - a autenticação ainda usa adaptador local de um único administrador; cadastro, proposta, revisão e
   auditoria já persistem no PostgreSQL, sempre separados da publicação;
-- o adaptador Excel é simulado e não acessa qualquer planilha;
-- o estado interativo da demonstração é volátil e reinicia ao recarregar;
+- a sincronização escreve somente na aba controlada `SECC_App_Staging`; o de-para para as nove abas
+  da planilha oficial ainda depende da validação do arquivo e do mapeamento usados pelo Estevão;
+- o estado da vitrine pública demonstrativa é volátil; o diagnóstico local persiste no PostgreSQL;
 - o GitHub contém apenas a fronteira pública sanitizada; o deploy não habilita serviços operacionais;
 - a prévia pública não possui persistência nem administração; sua finalidade é demonstrar produto,
   arquitetura e evolução;

@@ -50,8 +50,45 @@ export interface Company {
   tier: "tier_1" | "tier_2" | "unclassified";
   sector: string;
   eventType: "judicial_recovery" | "extrajudicial_recovery" | "bankruptcy" | "restructuring";
-  eventYear: number;
+  eventYear: number | null;
   publicationStatus: "demo" | "published" | "private";
+  workbookRow?: number | null;
+  companyType?: string | null;
+  referenceCode?: string | null;
+  collectionStartYear?: number | null;
+  collectionEndYear?: number | null;
+  workbookStatus?: string | null;
+  workbookCompletion?: number | null;
+  cvmCnpj?: string | null;
+  cvmCode?: string | null;
+  sourceWorkbookHash?: string | null;
+  coverageUpdatedAt?: string | null;
+}
+
+export interface CompanyCoverage {
+  companyId: string;
+  financialFilled: number;
+  financialExpected: number;
+  qualitativeFilled: number;
+  qualitativeExpected: number;
+  marketFilled: number;
+  marketExpected: number;
+  researchedYears: number;
+  totalYears: number;
+  lastDataYear: number | null;
+  workbookHash: string;
+  calculatedAt: string;
+}
+
+export interface CompanyDiagnostic extends Company {
+  coverage: CompanyCoverage | null;
+}
+
+export interface WorkbookSnapshot {
+  hash: string;
+  sourceName: string;
+  calculatedAt: string;
+  companies: Array<{ company: Company; coverage: CompanyCoverage }>;
 }
 
 export interface Proposal {
@@ -69,6 +106,7 @@ export interface Proposal {
   version: number;
   notes?: string;
   publishAuthorized: boolean;
+  externalKey?: string;
 }
 
 export interface ReviewDecision {

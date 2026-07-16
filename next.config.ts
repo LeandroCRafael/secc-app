@@ -15,7 +15,10 @@ const nextConfig: NextConfig = {
     }];
   },
   experimental: {
-    typedEnv: true
+    typedEnv: true,
+    serverActions: {
+      bodySizeLimit: "26mb",
+    },
   }
 };
 

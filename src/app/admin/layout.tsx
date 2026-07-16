@@ -5,7 +5,7 @@ import { isPublicPreview } from "@/lib/runtime/public-preview";
 
 export const dynamic = "force-dynamic";
 
-const adminLinks = [["Visão geral", "/admin"], ["Pesquisa", "/admin/pesquisa"], ["Importações", "/admin/importacoes"], ["Revisões", "/admin/revisoes"], ["Conflitos", "/admin/conflitos"], ["Sincronização", "/admin/sincronizacao"], ["Auditoria", "/admin/auditoria"], ["Banco local", "/admin/banco"]] as const;
+const adminLinks = [["Visão geral", "/admin"], ["Pesquisa CVM", "/admin/cvm"], ["Entrada manual", "/admin/pesquisa"], ["Importações", "/admin/importacoes"], ["Revisões", "/admin/revisoes"], ["Conflitos", "/admin/conflitos"], ["Sincronização", "/admin/sincronizacao"], ["Auditoria", "/admin/auditoria"], ["Banco local", "/admin/banco"]] as const;
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   if (isPublicPreview()) redirect("/construindo");
