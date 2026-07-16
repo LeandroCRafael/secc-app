@@ -71,6 +71,8 @@ npm run build
 - área de curadoria em `/admin`, protegida por credencial interna compartilhada em produção;
 - diagnóstico por empresa calculado diretamente da planilha mestre, com cobertura financeira,
   qualitativa e de mercado persistida sem copiar os valores para a área pública;
+- estação operacional por empresa em `/admin/empresas/[id]`, reunindo diagnóstico, pesquisa CVM,
+  entrada manual, histórico de propostas, contexto de fonte e rastreabilidade;
 - pesquisa no cadastro oficial da CVM e coleta de um exercício da DFP em propostas idempotentes,
   sempre submetidas à fila de revisão;
 - formulário manual validado por schema e fila de revisão persistida no PostgreSQL;

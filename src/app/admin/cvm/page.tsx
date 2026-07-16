@@ -6,14 +6,14 @@ import { collectCvmDfpAction } from "./actions";
 export const metadata = { title: "Pesquisa CVM" };
 export const dynamic = "force-dynamic";
 
-type Search = { companyId?: string; q?: string; message?: string };
+type Search = { companyId?: string; q?: string; message?: string; returnTo?: string };
 
 export default async function CvmPage({ searchParams }: { searchParams: Promise<Search> }) {
   await requireRole("admin");
   const search = await searchParams;
   let companies;
   try { companies = await new PostgresOperationalRepository().listCompanies(); }
-  catch { return <><header className="admin-title"><p className="eyebrow">Conector CVM</p><h1>Banco local indisponível.</h1></header><p className="notice">Inicie o Docker antes de pesquisar.</p></>; }
+  catch { return <><header className="admin-title"><p className="eyebrow">Conector CVM</p><h1>Banco operacional indisponível.</h1></header><p className="notice">Verifique a conexão do ambiente antes de pesquisar.</p></>; }
   const selected = companies.find((company) => company.id === search.companyId) ?? companies[0];
   let results: CvmCompany[] = [];
   let searchError = "";
@@ -32,6 +32,7 @@ export default async function CvmPage({ searchParams }: { searchParams: Promise<
     {search.message && <p className="notice" role="status">{search.message}</p>}
     <section className="card">
       <form className="form-grid" method="get">
+        {search.returnTo && <input name="returnTo" type="hidden" value={search.returnTo}/>}
         <label>Empresa da planilha<select name="companyId" defaultValue={selected?.id}>{companies.map((company) => <option key={company.id} value={company.id}>{company.name}</option>)}</select></label>
         <label>Nome, CNPJ ou código CVM<input name="q" defaultValue={search.q ?? selected?.name ?? ""} required /></label>
         <div className="full actions"><button className="button" type="submit">Pesquisar no cadastro CVM</button></div>
@@ -44,6 +45,7 @@ export default async function CvmPage({ searchParams }: { searchParams: Promise<
         <div className="split"><div><h3>{result.corporateName}</h3><p>{result.tradeName || "Sem nome comercial"}<br/>CNPJ <span className="mono">{result.cnpj}</span> · CVM <span className="mono">{result.cvmCode}</span><br/>{result.sector || "Setor não informado"} · {result.status}</p></div><span className="status available">Cadastro oficial</span></div>
         <form action={collectCvmDfpAction} className="inline-collection">
           <input name="companyId" type="hidden" value={selected?.id ?? ""}/><input name="cnpj" type="hidden" value={result.cnpj}/><input name="cvmCode" type="hidden" value={result.cvmCode}/><input name="corporateName" type="hidden" value={result.corporateName}/>
+          {search.returnTo && <input name="returnTo" type="hidden" value={search.returnTo}/>}
           <label>Exercício DFP<input name="year" type="number" min="2010" max={new Date().getFullYear()} defaultValue={defaultYear}/></label>
           <button className="button" type="submit" disabled={!selected}>Vincular e coletar DFP</button>
         </form>
