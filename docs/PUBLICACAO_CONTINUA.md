@@ -1,9 +1,9 @@
-# Publicação contínua da prévia
+# Publicação contínua interna
 
 ## Objetivo
 
-Disponibilizar uma URL pública para apresentar a evolução do SECC sem expor administração, banco local,
-planilha oficial, uploads, evidências ou credenciais.
+Disponibilizar uma URL interna para acompanhar a evolução do SECC sem expor banco local, planilha oficial,
+uploads, evidências ou credenciais no GitHub.
 
 **Produção:** `https://secc-app.vercel.app`  
 **Repositório:** `https://github.com/LeandroCRafael/secc-app`
@@ -12,11 +12,11 @@ planilha oficial, uploads, evidências ou credenciais.
 
 - **Local:** aplicação completa de desenvolvimento, PostgreSQL em Docker e curadoria demonstrativa.
 - **GitHub:** código, documentação e estruturas sanitizadas do produto.
-- **Vercel:** prévia pública construída a partir da branch `main`, sem banco ou credenciais privadas.
+- **Vercel:** aplicação construída a partir da branch `main`, com dashboard protegido e snapshot privado de leitura.
 
-Em produção, `NODE_ENV=production` ativa o modo público seguro. A navegação de curadoria é removida e
-qualquer rota `/admin` redireciona para `/construindo`. `PUBLIC_PREVIEW=true` permite reproduzir esse
-comportamento em outro ambiente.
+Em produção, o modo público seguro continua sendo o padrão. `INTERNAL_DASHBOARD_ENABLED=true` habilita
+`/admin` somente quando também existem credenciais HTTP e o snapshot protegido. `PUBLIC_PREVIEW=true`
+força novamente o redirecionamento para `/construindo`.
 
 ## Fluxo de atualização
 
@@ -27,5 +27,5 @@ comportamento em outro ambiente.
 5. a integração Git da Vercel gera um novo deploy;
 6. verificar a URL e os logs antes de considerar a atualização concluída.
 
-Persistência pública e autenticação real exigirão uma decisão posterior sobre serviços gerenciados. Até
-essa aprovação, nenhuma função administrativa será habilitada na Vercel.
+O dashboard publicado é somente leitura. Persistência remota, usuários individuais e ações administrativas
+exigirão uma decisão posterior sobre banco e autenticação gerenciados.

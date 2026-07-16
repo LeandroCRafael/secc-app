@@ -1,109 +1,50 @@
 import Link from "next/link";
 import { requireRole } from "@/lib/auth/server";
-import { PostgresOperationalRepository } from "@/lib/database/postgres-operational-repository";
+import { loadDiagnosticData } from "@/lib/diagnostics/internal-snapshot";
 import { WorkbookRefreshForm } from "@/features/diagnostics/workbook-refresh-form";
-import type { CompanyDiagnostic } from "@/types/domain";
+import { CoverageDistributionChart, TierCoverageChart } from "@/features/diagnostics/dashboard-charts";
+import { DiagnosticTabs } from "@/features/diagnostics/diagnostic-tabs";
+import { buildDashboardModel, priorityLabels } from "@/features/diagnostics/dashboard-model";
 
-export const metadata = { title: "Diagnóstico da coleta" };
+export const metadata = { title: "Dashboard mestre" };
 export const dynamic = "force-dynamic";
 
-type Search = { q?: string; coverage?: string; tier?: string; cvm?: string };
-type CoverageStatus = "complete" | "partial" | "empty" | "unmapped";
-
-function coverageStatus(company: CompanyDiagnostic): CoverageStatus {
-  const coverage = company.coverage;
-  if (!coverage || coverage.financialExpected === 0) return "unmapped";
-  if (coverage.financialFilled === 0) return "empty";
-  if (coverage.financialFilled >= coverage.financialExpected) return "complete";
-  return "partial";
-}
-
-function percent(company: CompanyDiagnostic): number {
-  const coverage = company.coverage;
-  if (!coverage || coverage.financialExpected === 0) return 0;
-  return Math.min(100, Math.round(coverage.financialFilled / coverage.financialExpected * 100));
-}
-
-const labels: Record<CoverageStatus, string> = {
-  complete: "Completa", partial: "Parcial", empty: "Sem dados", unmapped: "Sem janela",
-};
-
-export default async function AdminPage({ searchParams }: { searchParams: Promise<Search> }) {
+export default async function AdminDashboardPage() {
   await requireRole("admin");
-  const filters = await searchParams;
-  let companies: CompanyDiagnostic[];
-  let proposals;
+  let model;
+  let dataSource;
   try {
-    const repository = new PostgresOperationalRepository();
-    [companies, proposals] = await Promise.all([repository.listCompanyDiagnostics(), repository.listProposals()]);
+    dataSource = await loadDiagnosticData();
+    model = buildDashboardModel(dataSource.companies, dataSource.proposals);
   } catch {
-    return <><header className="admin-title"><p className="eyebrow">Diagnóstico operacional</p><h1>Banco local indisponível.</h1></header><p className="notice" role="alert">Inicie o Docker e execute as migrações antes de atualizar a planilha.</p></>;
+    return <><header className="admin-title"><p className="eyebrow">Dashboard mestre</p><h1>Banco local indisponível.</h1></header><p className="notice" role="alert">Inicie o Docker e execute as migrações antes de atualizar a planilha.</p></>;
   }
 
-  const counts = companies.reduce((result, company) => {
-    result[coverageStatus(company)] += 1;
-    if ((company.coverage?.financialFilled ?? 0) > 0) result.withData += 1;
-    else result.withoutData += 1;
-    if (company.cvmCnpj) result.cvm += 1;
-    return result;
-  }, { complete: 0, partial: 0, empty: 0, unmapped: 0, withData: 0, withoutData: 0, cvm: 0 });
-  const query = filters.q?.trim().toLocaleLowerCase("pt-BR") ?? "";
-  const visible = companies.filter((company) => {
-    if (query && !`${company.name} ${company.sector} ${company.referenceCode ?? ""}`.toLocaleLowerCase("pt-BR").includes(query)) return false;
-    if (filters.coverage === "empty" && (company.coverage?.financialFilled ?? 0) > 0) return false;
-    if (filters.coverage && !["all", "empty"].includes(filters.coverage) && coverageStatus(company) !== filters.coverage) return false;
-    if (filters.tier && filters.tier !== "all" && company.tier !== filters.tier) return false;
-    if (filters.cvm === "linked" && !company.cvmCnpj) return false;
-    if (filters.cvm === "unlinked" && company.cvmCnpj) return false;
-    return true;
-  });
-  const pending = proposals.filter((proposal) => ["submitted", "under_review", "conflicted"].includes(proposal.status)).length;
-  const latest = companies.find((company) => company.coverageUpdatedAt)?.coverageUpdatedAt;
-
   return <>
-    <header className="admin-title">
-      <p className="eyebrow">Diagnóstico operacional · planilha mestre</p>
-      <h1>Cobertura por empresa, pronta para ação.</h1>
-      <p className="lede">A plataforma lê a planilha real, mede o preenchimento nas abas operacionais e identifica onde pesquisar na CVM. Nenhum valor é publicado ou aprovado automaticamente.</p>
-      <WorkbookRefreshForm />
-      {latest && <p className="muted">Último cálculo: {new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(new Date(latest))}</p>}
+    <DiagnosticTabs active="dashboard" />
+    <header className="admin-title dashboard-title">
+      <div><p className="eyebrow">Planilha mestre · espelho operacional</p><h1>O que temos, o que falta e onde agir.</h1><p className="lede">A mesma leitura executiva do Excel, calculada sobre a base operacional privada. Nenhum valor é publicado ou aprovado automaticamente.</p></div>
+      <div className="dashboard-actions">{dataSource.mode === "operational" ? <WorkbookRefreshForm /> : <span className="status">Espelho interno · somente leitura</span>}{model.latestCalculation && <p className="muted">Último cálculo: {new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(new Date(model.latestCalculation))}</p>}{dataSource.generatedAt && <p className="muted">Snapshot publicado: {new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(new Date(dataSource.generatedAt))}</p>}</div>
     </header>
 
-    <section className="grid three" aria-label="Resumo da cobertura">
-      <article className="card"><p>Empresas na referência</p><div className="metric">{companies.length}</div></article>
-      <article className="card"><p>Com algum dado financeiro</p><div className="metric">{counts.withData}</div></article>
-      <article className="card"><p>Sem dado financeiro</p><div className="metric">{counts.withoutData}</div></article>
-      <article className="card"><p>Sem janela definida</p><div className="metric">{counts.unmapped}</div></article>
-      <article className="card"><p>Cobertura completa</p><div className="metric">{counts.complete}</div></article>
-      <article className="card"><p>Vinculadas à CVM</p><div className="metric">{counts.cvm}</div><Link href="/admin/cvm">Pesquisar CVM →</Link></article>
-      <article className="card"><p>Propostas em revisão</p><div className="metric">{pending}</div><Link href="/admin/revisoes">Abrir fila →</Link></article>
+    <section className="metric-strip" aria-label="Indicadores principais da planilha mestre">
+      <article className="metric-card tone-navy"><span>Empresas no universo</span><strong>{model.total}</strong></article>
+      <article className="metric-card tone-green"><span>Com dados financeiros</span><strong>{model.withFinancial}</strong></article>
+      <article className="metric-card tone-red"><span>Sem dados financeiros</span><strong>{model.withoutFinancial}</strong></article>
+      <article className="metric-card tone-teal"><span>Cobertura financeira ≥ 90%</span><strong>{model.highCoverage}</strong></article>
+      <article className="metric-card tone-teal"><span>Com dados qualitativos</span><strong>{model.withQualitative}</strong></article>
+      <article className="metric-card tone-amber"><span>Com dados de mercado</span><strong>{model.withMarket}</strong></article>
+      <article className="metric-card tone-red"><span>Empresas bloqueadas</span><strong>{model.blocked}</strong></article>
+      <article className="metric-card tone-green"><span>Status da reconciliação</span><strong className="metric-status">{model.total > 0 ? "Base reconciliada" : "Revisar"}</strong></article>
     </section>
 
-    <section className="section">
-      <div className="split"><div><p className="eyebrow">Carteira</p><h2>{visible.length} empresa(s) no filtro</h2></div><p className="muted">Cobertura = campos financeiros preenchidos ÷ campos esperados na janela.</p></div>
-      <form className="filter-bar" method="get">
-        <label>Buscar<input defaultValue={filters.q} name="q" placeholder="Empresa, setor ou ticker/CNPJ" /></label>
-        <label>Cobertura<select defaultValue={filters.coverage ?? "all"} name="coverage"><option value="all">Todas</option><option value="empty">Sem dados</option><option value="partial">Parcial</option><option value="complete">Completa</option><option value="unmapped">Sem janela</option></select></label>
-        <label>Tier<select defaultValue={filters.tier ?? "all"} name="tier"><option value="all">Todos</option><option value="tier_1">Tier 1</option><option value="tier_2">Tier 2</option><option value="unclassified">A buscar</option></select></label>
-        <label>Vínculo CVM<select defaultValue={filters.cvm ?? "all"} name="cvm"><option value="all">Todos</option><option value="linked">Vinculadas</option><option value="unlinked">Não vinculadas</option></select></label>
-        <button className="button" type="submit">Aplicar</button>
-      </form>
-      <div className="table-wrap">
-        <table><thead><tr><th>Empresa</th><th>Tier / tipo</th><th>Janela</th><th>Financeiro</th><th>Anos com dados</th><th>CVM</th><th>Próxima ação</th></tr></thead>
-        <tbody>{visible.map((company) => {
-          const status = coverageStatus(company);
-          const coverage = company.coverage;
-          return <tr key={company.id}>
-            <td><strong>{company.name}</strong><br/><span className="muted">{company.sector}</span></td>
-            <td>{company.tier.replace("tier_", "T")}<br/><span className="muted">{company.companyType ?? "—"}</span></td>
-            <td>{company.collectionStartYear && company.collectionEndYear ? `${company.collectionStartYear}–${company.collectionEndYear}` : "—"}</td>
-            <td><span className={`status coverage-${status}`}>{labels[status]} · {percent(company)}%</span><div className="progress" aria-label={`${percent(company)}%`}><span style={{ width: `${percent(company)}%` }} /></div></td>
-            <td>{coverage ? `${coverage.researchedYears}/${coverage.totalYears}` : "—"}{coverage?.lastDataYear && <><br/><span className="muted">até {coverage.lastDataYear}</span></>}</td>
-            <td>{company.cvmCnpj ? <><span className="status available">Vinculada</span><br/><span className="mono">{company.cvmCode}</span></> : <span className="status not_researched">Pendente</span>}</td>
-            <td><Link href={`/admin/cvm?companyId=${encodeURIComponent(company.id)}&q=${encodeURIComponent(company.name)}`}>{company.cvmCnpj ? "Coletar DFP" : "Pesquisar CVM"} →</Link></td>
-          </tr>;
-        })}</tbody></table>
-      </div>
+    <section className="dashboard-grid" aria-label="Gráficos de cobertura"><TierCoverageChart data={model.tiers} /><CoverageDistributionChart data={model.bands} /></section>
+
+    <section className="dashboard-grid dashboard-grid-small">
+      <article className="dashboard-panel"><div className="panel-heading"><div><p className="eyebrow">Cadastro</p><h3>Estágio informado no Excel</h3></div></div><div className="status-summary">{model.workbookStatuses.map((status) => <div key={status.label}><span>{status.label}</span><strong>{status.value}</strong></div>)}</div></article>
+      <article className="dashboard-panel"><div className="panel-heading"><div><p className="eyebrow">Fila de ação</p><h3>Prioridade calculada</h3></div><Link href="/admin/empresas">Abrir visão mestre →</Link></div><div className="priority-summary">{Object.entries(model.priorityCounts).map(([priority, value]) => <div key={priority}><span className={`priority priority-${priority}`}>{priorityLabels[priority as keyof typeof priorityLabels]}</span><strong>{value}</strong></div>)}</div><p className="muted">{model.pendingProposals} proposta(s) aguardam revisão, conflito ou decisão.</p></article>
     </section>
+
+    <section className="dashboard-callout"><div><p className="eyebrow">Leitura executiva</p><h2>O próximo ganho é completar, revisar e publicar com controle.</h2></div><ol><li>Concluir Tier 1 sem dados ou abaixo de 90% de cobertura financeira.</li><li>Expandir o qualitativo além do nome do auditor.</li><li>Automatizar mercado para listadas e manter a fila de revisão.</li></ol></section>
   </>;
 }
