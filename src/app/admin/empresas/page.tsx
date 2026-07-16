@@ -44,7 +44,7 @@ export default async function MasterCompaniesPage({ searchParams }: { searchPara
         const coverage = company.coverage; const band = financialBand(company); const priority = diagnosticPriority(company);
         const financialPercent = Math.round(financialCoverageRate(company) * 100); const financialExpected = financialExpectedCells(company); const qualitativePercent = percent(coverage?.qualitativeFilled, coverage?.qualitativeExpected); const marketPercent = percent(coverage?.marketFilled, coverage?.marketExpected);
         return <tr key={company.id}>
-          <td><strong>{company.name}</strong><br/><span className="muted">{company.sector} · {company.referenceCode ?? "sem código"}</span></td>
+          <td><Link className="company-link" href={`/admin/empresas/${encodeURIComponent(company.id)}`}><strong>{company.name}</strong><span>Abrir estação →</span></Link><span className="muted">{company.sector} · {company.referenceCode ?? "sem código"}</span></td>
           <td>{company.tier === "tier_1" ? "T1" : company.tier === "tier_2" ? "T2" : "BUSCA"}<br/><span className="muted">{company.companyType ?? "—"}</span></td>
           <td><span className="workbook-status">{company.workbookStatus ?? "Não informado"}</span><br/><span className="muted">{company.collectionStartYear && company.collectionEndYear ? `${company.collectionStartYear}–${company.collectionEndYear}` : "sem janela"}</span></td>
           <td><span className={`status coverage-${band}`}>{financialBandLabels[band]} · {financialPercent}%</span><div className="progress"><span style={{ width: `${financialPercent}%` }} /></div><span className="muted">{coverage?.financialFilled ?? 0}/{financialExpected} células{(coverage?.financialExpected ?? 0) === 0 && financialExpected > 0 ? " · base nos anos pesquisados" : ""}</span></td>
@@ -52,7 +52,7 @@ export default async function MasterCompaniesPage({ searchParams }: { searchPara
           <td><strong>{marketPercent}%</strong><br/><span className="muted">{coverage?.marketFilled ?? 0}/{coverage?.marketExpected ?? 0} células</span></td>
           <td>{coverage?.lastDataYear ?? "—"}<br/><span className="muted">{coverage ? coverage.totalYears > 0 ? `${coverage.researchedYears}/${coverage.totalYears} anos` : coverage.researchedYears > 0 ? `${coverage.researchedYears} anos pesquisados · janela pendente` : "janela pendente" : "não calculado"}</span></td>
           <td><span className={`priority priority-${priority}`}>{priorityLabels[priority]}</span></td>
-          <td><strong>{nextDiagnosticAction(company)}</strong><br/><Link href={`/admin/cvm?companyId=${encodeURIComponent(company.id)}&q=${encodeURIComponent(company.name)}`}>{company.cvmCnpj ? "Coletar DFP" : "Pesquisar CVM"} →</Link></td>
+          <td><strong>{nextDiagnosticAction(company)}</strong><br/><Link href={`/admin/empresas/${encodeURIComponent(company.id)}`}>Pesquisar e incluir →</Link></td>
         </tr>;
       })}</tbody></table></div>
       {visible.length === 0 && <p className="notice">Nenhuma empresa corresponde aos filtros selecionados.</p>}

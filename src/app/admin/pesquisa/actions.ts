@@ -6,6 +6,7 @@ import { requireRole } from "@/lib/auth/server";
 import { PostgresOperationalRepository } from "@/lib/database/postgres-operational-repository";
 import { companyInputSchema } from "@/lib/validation/company";
 import { proposalInputSchema } from "@/lib/validation/proposal";
+import { safeCompanyReturnPath } from "@/lib/navigation/admin-return";
 import type { IntakeActionState } from "@/features/intake/action-state";
 import type { AuditEvent, Company, Proposal } from "@/types/domain";
 
@@ -18,7 +19,7 @@ function errorMessage(error: unknown): string {
   if (typeof error === "object" && error !== null && "code" in error && error.code === "23503") {
     return "A empresa selecionada não existe mais. Atualize a página e tente novamente.";
   }
-  return "Não foi possível gravar no banco local. Revise os campos e tente novamente.";
+  return "Não foi possível gravar no banco operacional. Revise os campos e tente novamente.";
 }
 
 export async function createCompanyAction(
@@ -60,6 +61,7 @@ export async function createCompanyAction(
   try {
     await new PostgresOperationalRepository().createCompany(company, audit);
     revalidatePath("/admin/pesquisa");
+    revalidatePath("/admin/empresas");
     revalidatePath("/admin/banco");
     return { status: "success", message: "Empresa cadastrada como privada e registrada na auditoria." };
   } catch (error) {
@@ -138,9 +140,13 @@ export async function submitProposalAction(
 
   try {
     await new PostgresOperationalRepository().submitProposal(proposal, audit);
+    const returnTo = safeCompanyReturnPath(field(formData, "returnTo"), proposal.companyId);
     revalidatePath("/admin/pesquisa");
+    revalidatePath("/admin/empresas");
+    revalidatePath(returnTo);
     revalidatePath("/admin/banco");
     revalidatePath("/admin/revisoes");
+    revalidatePath("/admin/auditoria");
     return { status: "success", message: "Proposta gravada, auditada e enviada para revisão." };
   } catch (error) {
     return { status: "error", message: errorMessage(error) };

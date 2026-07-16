@@ -6,10 +6,15 @@ import { redirect } from "next/navigation";
 import { requireRole } from "@/lib/auth/server";
 import { collectCvmDfp } from "@/lib/cvm/client";
 import { PostgresOperationalRepository } from "@/lib/database/postgres-operational-repository";
+import { pathWithMessage, safeCompanyReturnPath } from "@/lib/navigation/admin-return";
 import type { AuditEvent, Proposal } from "@/types/domain";
 
 function value(formData: FormData, key: string): string { return String(formData.get(key) ?? "").trim(); }
 function destination(companyId: string, message: string): string { return `/admin/cvm?companyId=${encodeURIComponent(companyId)}&message=${encodeURIComponent(message)}`; }
+function resultDestination(formData: FormData, companyId: string, message: string): string {
+  const requested = value(formData, "returnTo");
+  return requested ? pathWithMessage(safeCompanyReturnPath(requested, companyId), message) : destination(companyId, message);
+}
 
 export async function collectCvmDfpAction(formData: FormData): Promise<never> {
   const user = await requireRole("admin");
@@ -52,11 +57,12 @@ export async function collectCvmDfpAction(formData: FormData): Promise<never> {
       reason: `${proposals.length} métricas CVM processadas para revisão; lote idempotente.`, origin: "system",
     };
     const inserted = await repository.submitProposals(proposals, batchAudit);
-    revalidatePath("/admin"); revalidatePath("/admin/cvm"); revalidatePath("/admin/revisoes"); revalidatePath("/admin/banco");
+    revalidatePath("/admin"); revalidatePath("/admin/empresas"); revalidatePath("/admin/cvm"); revalidatePath("/admin/revisoes"); revalidatePath("/admin/auditoria"); revalidatePath("/admin/banco");
+    revalidatePath(safeCompanyReturnPath(value(formData, "returnTo"), companyId));
     outcome = inserted === 0 ? `DFP ${year} já havia sido coletada; nenhuma duplicata criada.` : `${inserted} propostas da DFP ${year} enviadas para revisão.`;
   } catch (error) {
     const message = error instanceof Error ? error.message : "Falha não identificada.";
     outcome = `Coleta não concluída: ${message}`;
   }
-  redirect(destination(companyId, outcome));
+  redirect(resultDestination(formData, companyId, outcome));
 }

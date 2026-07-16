@@ -53,6 +53,8 @@ export async function reviewProposalAction(
   try {
     await new PostgresOperationalRepository().decideProposal(decision, audit);
     revalidatePath("/admin/revisoes");
+    revalidatePath("/admin/empresas");
+    revalidatePath("/admin/empresas/[id]", "page");
     revalidatePath("/admin/auditoria");
     revalidatePath("/admin/banco");
     return { status: "success", message: "Decisão gravada com nova versão e evento de auditoria." };
@@ -63,6 +65,6 @@ export async function reviewProposalAction(
     if (error instanceof Error && error.message.includes("não encontrada")) {
       return { status: "error", message: error.message };
     }
-    return { status: "error", message: "Não foi possível registrar a decisão no banco local." };
+    return { status: "error", message: "Não foi possível registrar a decisão no banco operacional." };
   }
 }
