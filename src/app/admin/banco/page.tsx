@@ -59,7 +59,7 @@ export default async function DatabasePage() {
       )}
       <section className="section notice">
         Repositório operacional validado em leitura: {state.connected ? `${state.companies} empresa(s) e ${state.proposals} proposta(s)` : "indisponível"}.
-        Os fluxos demonstrativos ainda não gravam dados operacionais.
+        O diagnóstico da planilha, os vínculos CVM e as propostas de coleta usam esta base operacional privada.
       </section>
     </>
   );

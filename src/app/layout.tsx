@@ -10,5 +10,5 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const publicPreview = isPublicPreview();
-  return <html lang="pt-BR"><body><div className="demo-ribbon">{publicPreview ? "PRÉVIA PÚBLICA EM CONSTRUÇÃO · DADOS FICTÍCIOS" : "AMBIENTE LOCAL · DADOS FICTÍCIOS DE DEMONSTRAÇÃO"}</div><SiteHeader />{children}<footer className="footer"><div className="shell">Finalidade acadêmica e informacional. O conteúdo não constitui recomendação de crédito ou investimento.</div></footer></body></html>;
+  return <html lang="pt-BR"><body><div className="demo-ribbon">{publicPreview ? "PRÉVIA PÚBLICA EM CONSTRUÇÃO · DADOS FICTÍCIOS" : "AMBIENTE LOCAL · BASE OPERACIONAL PRIVADA · PUBLICAÇÃO CONTROLADA"}</div><SiteHeader />{children}<footer className="footer"><div className="shell">Finalidade acadêmica e informacional. O conteúdo não constitui recomendação de crédito ou investimento.</div></footer></body></html>;
 }

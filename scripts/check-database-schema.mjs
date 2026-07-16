@@ -6,7 +6,7 @@ if (!databaseUrl) {
   throw new Error("DATABASE_URL não está configurada. Execute primeiro o setup local.");
 }
 
-const expectedTables = ["audit_events", "companies", "proposals", "review_decisions", "sources"];
+const expectedTables = ["audit_events", "companies", "company_coverage", "proposals", "review_decisions", "sources"];
 const sql = postgres(databaseUrl, { max: 1, connect_timeout: 10 });
 
 try {
