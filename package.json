@@ -15,6 +15,7 @@
     "db:status": "docker compose --env-file .env.docker ps",
     "db:check": "node --env-file=.env.local scripts/check-database.mjs",
     "db:migrate": "node --env-file=.env.local scripts/migrate-database.mjs",
+    "db:migrate:data": "node --env-file=.env.local scripts/migrate-operational-data.mjs",
     "db:schema:check": "node --env-file=.env.local scripts/check-database-schema.mjs",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",

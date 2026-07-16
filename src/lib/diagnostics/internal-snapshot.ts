@@ -16,8 +16,12 @@ export type DiagnosticDataSource = {
   generatedAt: string | null;
 };
 
+export function hasOperationalDatabase(): boolean {
+  return Boolean(process.env.DATABASE_URL);
+}
+
 export function isInternalSnapshotMode(): boolean {
-  return Boolean(process.env.INTERNAL_DIAGNOSTICS_SNAPSHOT);
+  return !hasOperationalDatabase() && Boolean(process.env.INTERNAL_DIAGNOSTICS_SNAPSHOT);
 }
 
 function readSnapshot(): InternalDiagnosticsSnapshot {
@@ -32,12 +36,20 @@ function readSnapshot(): InternalDiagnosticsSnapshot {
 }
 
 export async function loadDiagnosticData(): Promise<DiagnosticDataSource> {
-  if (isInternalSnapshotMode()) {
+  if (hasOperationalDatabase()) {
+    try {
+      const repository = new PostgresOperationalRepository();
+      const [companies, proposals] = await Promise.all([repository.listCompanyDiagnostics(), repository.listProposals()]);
+      return { companies, proposals, mode: "operational", generatedAt: null };
+    } catch (error) {
+      if (!process.env.INTERNAL_DIAGNOSTICS_SNAPSHOT) throw error;
+    }
+  }
+
+  if (process.env.INTERNAL_DIAGNOSTICS_SNAPSHOT) {
     const snapshot = readSnapshot();
     return { companies: snapshot.companies, proposals: [], mode: "snapshot", generatedAt: snapshot.generatedAt };
   }
 
-  const repository = new PostgresOperationalRepository();
-  const [companies, proposals] = await Promise.all([repository.listCompanyDiagnostics(), repository.listProposals()]);
-  return { companies, proposals, mode: "operational", generatedAt: null };
+  throw new Error("Banco operacional e snapshot interno indisponíveis.");
 }
