@@ -22,11 +22,12 @@ A aplicação estará disponível em `http://localhost:3000`. Nenhuma variável 
 demo volátil. A persistência PostgreSQL usa `.env.docker` e `.env.local`, gerados localmente pelo script
 de configuração e nunca versionados.
 
-## Prévia pública
+## Publicação interna
 
-A versão de produção é uma vitrine segura do trabalho em andamento. Ela publica as rotas informacionais
-e a visão `/construindo`, mas remove o acesso à curadoria e redireciona `/admin`. Banco PostgreSQL,
-planilha, uploads e filesystem privado permanecem exclusivamente locais nesta etapa.
+A versão de produção mantém as rotas informacionais e também pode habilitar o dashboard `/admin` para
+uso interno. O acesso exige autenticação HTTP configurada na Vercel e consome um snapshot comprimido
+armazenado como variável protegida; a base da planilha não é versionada no GitHub. O snapshot publicado
+é somente leitura. PostgreSQL, planilha, uploads e operações de curadoria permanecem locais nesta etapa.
 
 URL permanente da prévia: [secc-app.vercel.app](https://secc-app.vercel.app).
 
@@ -84,9 +85,8 @@ npm run build
 - a sincronização escreve somente na aba controlada `SECC_App_Staging`; o de-para para as nove abas
   da planilha oficial ainda depende da validação do arquivo e do mapeamento usados pelo Estevão;
 - o estado da vitrine pública demonstrativa é volátil; o diagnóstico local persiste no PostgreSQL;
-- o GitHub contém apenas a fronteira pública sanitizada; o deploy não habilita serviços operacionais;
-- a prévia pública não possui persistência nem administração; sua finalidade é demonstrar produto,
-  arquitetura e evolução;
+- o GitHub contém somente código e estruturas sanitizadas; o snapshot interno é mantido fora do repositório;
+- o dashboard interno publicado é um espelho de leitura e não possui persistência nem serviços de escrita;
 - a planilha está em OneDrive pessoal; o modo selecionado é intercâmbio de arquivo versionado.
 
 ## Segurança e dados

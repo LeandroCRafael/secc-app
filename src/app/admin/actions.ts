@@ -27,6 +27,7 @@ export async function refreshWorkbookDiagnosticAction(
     };
     await new PostgresOperationalRepository().synchronizeWorkbook(snapshot, audit);
     revalidatePath("/admin");
+    revalidatePath("/admin/empresas");
     revalidatePath("/admin/cvm");
     revalidatePath("/admin/banco");
     return { status: "success", message: `${snapshot.companies.length} empresas atualizadas. A planilha permaneceu inalterada.` };
