@@ -18,16 +18,15 @@ npm install
 npm run dev
 ```
 
-A aplicação estará disponível em `http://localhost:3000`. Nenhuma variável é necessária para o modo
-demo volátil. A persistência PostgreSQL usa `.env.docker` e `.env.local`, gerados localmente pelo script
-de configuração e nunca versionados.
+A aplicação estará disponível em `http://localhost:3000`. A persistência pode usar o Docker local ou a
+conexão Neon sincronizada pela Vercel em `.env.local`; arquivos de ambiente nunca são versionados.
 
 ## Publicação interna
 
-A versão de produção mantém as rotas informacionais e também pode habilitar o dashboard `/admin` para
-uso interno. O acesso exige autenticação HTTP configurada na Vercel e consome um snapshot comprimido
-armazenado como variável protegida; a base da planilha não é versionada no GitHub. O snapshot publicado
-é somente leitura. PostgreSQL, planilha, uploads e operações de curadoria permanecem locais nesta etapa.
+A versão de produção mantém as rotas informacionais e habilita `/admin` para uso interno. O acesso exige
+autenticação HTTP configurada na Vercel e usa PostgreSQL gerenciado como base operacional persistente.
+Um snapshot comprimido permanece como contingência de leitura; a planilha não é versionada no GitHub.
+Arquivos-fonte e backups continuam fora do deploy.
 
 URL permanente da prévia: [secc-app.vercel.app](https://secc-app.vercel.app).
 
@@ -50,6 +49,13 @@ volume Docker nomeado, fora da sincronização do OneDrive.
 O cliente da aplicação é criado somente no servidor e sob demanda; o diagnóstico protegido fica em
 `/admin/banco`.
 
+## PostgreSQL gerenciado
+
+Produção, preview e desenvolvimento recebem `DATABASE_URL` pela integração Neon do Marketplace da
+Vercel. As migrações de schema continuam versionadas em `db/migrations/`. A carga inicial entre bancos
+usa `scripts/migrate-operational-data.mjs`, exige origem e destino distintos e só aceita destino vazio;
+ao final, reconcilia as contagens de todas as tabelas operacionais.
+
 ## Controles de qualidade
 
 ```powershell
@@ -62,7 +68,7 @@ npm run build
 ## Escopo implementado
 
 - rotas públicas `/`, `/empresas`, `/empresas/[slug]`, `/comparar`, `/metodologia`, `/dados` e `/sobre`;
-- área de curadoria em `/admin`, protegida por adaptador local explicitamente demo;
+- área de curadoria em `/admin`, protegida por credencial interna compartilhada em produção;
 - diagnóstico por empresa calculado diretamente da planilha mestre, com cobertura financeira,
   qualitativa e de mercado persistida sem copiar os valores para a área pública;
 - pesquisa no cadastro oficial da CVM e coleta de um exercício da DFP em propostas idempotentes,
@@ -80,13 +86,13 @@ npm run build
 
 ## Limitações deliberadas
 
-- a autenticação ainda usa adaptador local de um único administrador; cadastro, proposta, revisão e
+- a autenticação ainda usa um único administrador compartilhado; cadastro, proposta, revisão e
   auditoria já persistem no PostgreSQL, sempre separados da publicação;
 - a sincronização escreve somente na aba controlada `SECC_App_Staging`; o de-para para as nove abas
   da planilha oficial ainda depende da validação do arquivo e do mapeamento usados pelo Estevão;
-- o estado da vitrine pública demonstrativa é volátil; o diagnóstico local persiste no PostgreSQL;
+- a vitrine pública demonstrativa permanece separada; o diagnóstico interno persiste no PostgreSQL gerenciado;
 - o GitHub contém somente código e estruturas sanitizadas; o snapshot interno é mantido fora do repositório;
-- o dashboard interno publicado é um espelho de leitura e não possui persistência nem serviços de escrita;
+- o dashboard interno usa persistência gerenciada; ações de escrita continuam sujeitas a proposta, revisão e auditoria;
 - a planilha está em OneDrive pessoal; o modo selecionado é intercâmbio de arquivo versionado.
 
 ## Segurança e dados
@@ -100,7 +106,7 @@ backups, evidências e uploads permanecem privados e ignorados pelo Git. Uma eve
 OneDrive deve usar exclusivamente a cópia sanitizada em `local/publicacao-onedrive/excel-sanitizado/`,
 nunca o mestre oficial.
 
-Infraestrutura definida para a próxima etapa: PostgreSQL local, um administrador local e filesystem
-privado. Consulte `docs/RECOMENDACAO_AMBIENTE_LOCAL.md` antes de configurar persistência.
+Infraestrutura atual: PostgreSQL gerenciado em produção, PostgreSQL local para desenvolvimento e
+filesystem privado para arquivos-fonte. Consulte `docs/RECOMENDACAO_AMBIENTE_LOCAL.md` para o ambiente local.
 
 Leitura arquitetural obrigatória: `PROMPT_CODE.md`, `AGENTS.md` e os documentos em `docs/`.

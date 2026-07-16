@@ -14,3 +14,10 @@ sobrescrita silenciosa de credenciais.
 
 Os scripts futuros de exportação, manifesto e backup devem aceitar caminhos por configuração e nunca
 embutir caminhos pessoais, tokens ou credenciais.
+
+## Migração para o banco gerenciado
+
+`migrate-operational-data.mjs` copia cadastro, cobertura, fontes, propostas, decisões e auditoria entre
+dois bancos PostgreSQL. A origem é informada por `SOURCE_DATABASE_URL`; o destino usa
+`TARGET_DATABASE_URL`, `DATABASE_URL_UNPOOLED` ou `DATABASE_URL`. O script interrompe se o destino não
+estiver vazio e reconcilia as contagens após a transação.

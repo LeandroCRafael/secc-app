@@ -24,7 +24,7 @@ export default async function AdminDashboardPage() {
     <DiagnosticTabs active="dashboard" />
     <header className="admin-title dashboard-title">
       <div><p className="eyebrow">Planilha mestre · espelho operacional</p><h1>O que temos, o que falta e onde agir.</h1><p className="lede">A mesma leitura executiva do Excel, calculada sobre a base operacional privada. Nenhum valor é publicado ou aprovado automaticamente.</p></div>
-      <div className="dashboard-actions">{dataSource.mode === "operational" ? <WorkbookRefreshForm /> : <span className="status">Espelho interno · somente leitura</span>}{model.latestCalculation && <p className="muted">Último cálculo: {new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(new Date(model.latestCalculation))}</p>}{dataSource.generatedAt && <p className="muted">Snapshot publicado: {new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(new Date(dataSource.generatedAt))}</p>}</div>
+      <div className="dashboard-actions">{dataSource.mode === "operational" && process.env.APP_DATA_DIR ? <WorkbookRefreshForm /> : <span className="status">{dataSource.mode === "operational" ? "Banco gerenciado · persistente" : "Espelho interno · contingência"}</span>}{model.latestCalculation && <p className="muted">Último cálculo: {new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(new Date(model.latestCalculation))}</p>}{dataSource.generatedAt && <p className="muted">Snapshot publicado: {new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(new Date(dataSource.generatedAt))}</p>}</div>
     </header>
 
     <section className="metric-strip" aria-label="Indicadores principais da planilha mestre">

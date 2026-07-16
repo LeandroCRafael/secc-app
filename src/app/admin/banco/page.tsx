@@ -2,7 +2,7 @@ import { requireRole } from "@/lib/auth/server";
 import { checkDatabaseHealth } from "@/lib/database/postgres";
 import { PostgresOperationalRepository } from "@/lib/database/postgres-operational-repository";
 
-export const metadata = { title: "Banco local" };
+export const metadata = { title: "Banco operacional" };
 export const dynamic = "force-dynamic";
 
 type DatabaseState =
@@ -26,21 +26,23 @@ async function getDatabaseState(): Promise<DatabaseState> {
 export default async function DatabasePage() {
   await requireRole("admin");
   const state = await getDatabaseState();
+  const environment = process.env.VERCEL ? "Produção gerenciada · Neon" : "Ambiente de desenvolvimento";
 
   return (
     <>
       <header className="admin-title">
-        <p className="eyebrow">Infraestrutura local</p>
+        <p className="eyebrow">Infraestrutura operacional</p>
         <h1>PostgreSQL operacional.</h1>
         <p className="lede">
           Diagnóstico restrito ao administrador. Credenciais e endereço de conexão não são exibidos.
         </p>
       </header>
       {state.connected ? (
-        <section className="grid three" aria-label="Diagnóstico do banco local">
+        <section className="grid three" aria-label="Diagnóstico do banco operacional">
           <article className="card">
             <p>Estado</p>
             <div className="metric">Conectado</div>
+            <p>{environment}</p>
           </article>
           <article className="card">
             <p>Banco e usuário</p>
@@ -54,7 +56,7 @@ export default async function DatabasePage() {
         </section>
       ) : (
         <section className="notice" role="alert">
-          O banco local não respondeu. Inicie o Docker Desktop e execute <span className="mono">npm run db:up</span>.
+          O banco operacional não respondeu. Verifique a conexão configurada para este ambiente.
         </section>
       )}
       <section className="section notice">

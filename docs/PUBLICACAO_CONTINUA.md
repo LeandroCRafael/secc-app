@@ -12,11 +12,11 @@ uploads, evidências ou credenciais no GitHub.
 
 - **Local:** aplicação completa de desenvolvimento, PostgreSQL em Docker e curadoria demonstrativa.
 - **GitHub:** código, documentação e estruturas sanitizadas do produto.
-- **Vercel:** aplicação construída a partir da branch `main`, com dashboard protegido e snapshot privado de leitura.
+- **Vercel:** aplicação construída a partir da branch `main`, com dashboard protegido, PostgreSQL gerenciado e snapshot privado de contingência.
 
 Em produção, o modo público seguro continua sendo o padrão. `INTERNAL_DASHBOARD_ENABLED=true` habilita
-`/admin` somente quando também existem credenciais HTTP e o snapshot protegido. `PUBLIC_PREVIEW=true`
-força novamente o redirecionamento para `/construindo`.
+`/admin` somente quando também existem credenciais HTTP. O banco gerenciado é a fonte principal e o
+snapshot protegido é a contingência. `PUBLIC_PREVIEW=true` força novamente o redirecionamento.
 
 ## Fluxo de atualização
 
@@ -27,5 +27,5 @@ força novamente o redirecionamento para `/construindo`.
 5. a integração Git da Vercel gera um novo deploy;
 6. verificar a URL e os logs antes de considerar a atualização concluída.
 
-O dashboard publicado é somente leitura. Persistência remota, usuários individuais e ações administrativas
-exigirão uma decisão posterior sobre banco e autenticação gerenciados.
+O dashboard lê o PostgreSQL gerenciado e recorre ao snapshot somente se a conexão operacional falhar.
+Usuários individuais e papéis separados continuam como evolução posterior da autenticação.
