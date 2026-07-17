@@ -77,7 +77,8 @@ npm run build
   sempre submetidas à fila de revisão;
 - formulário manual validado por schema e fila de revisão persistida no PostgreSQL;
 - aprovação/rejeição com justificativa, versão esperada e auditoria atômica; prévia de release ainda demonstrativa;
-- upload local de CSV/XLSX com allowlist, limite, MIME e assinatura, sem persistência;
+- importação estruturada de CSV/XLSX com allowlist, limite, MIME, assinatura, prévia persistida,
+  validação por linha, idempotência e envio controlado de propostas à revisão;
 - intercâmbio local com leitura de XLSX, backup da origem, staging de propostas aprovadas,
   deduplicação por proposta e download de uma nova versão para conferência;
 - contratos separados entre domínio operacional, importação, Excel e publicação.
@@ -92,6 +93,8 @@ npm run build
   auditoria já persistem no PostgreSQL, sempre separados da publicação;
 - a sincronização escreve somente na aba controlada `SECC_App_Staging`; o de-para para as nove abas
   da planilha oficial ainda depende da validação do arquivo e do mapeamento usados pelo Estevão;
+- a importação estruturada persiste hash, metadados e linhas normalizadas; o arquivo bruto é processado
+  de forma transitória e ainda não é mantido em object storage;
 - a vitrine pública demonstrativa permanece separada; o diagnóstico interno persiste no PostgreSQL gerenciado;
 - o GitHub contém somente código e estruturas sanitizadas; o snapshot interno é mantido fora do repositório;
 - o dashboard interno usa persistência gerenciada; ações de escrita continuam sujeitas a proposta, revisão e auditoria;

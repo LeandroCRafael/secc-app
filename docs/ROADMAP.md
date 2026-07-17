@@ -37,9 +37,9 @@ assíncrono permanecem nas fases seguintes.
 
 - criar formulários de pesquisa e input manual;
 - conectar cadastro de empresa e proposta ao PostgreSQL com auditoria atômica — **concluído**;
-- receber XLSX e CSV estruturados;
+- receber XLSX e CSV estruturados — **concluído com modelo, prévia persistida e validação por linha**;
 - armazenar documentos-fonte como evidência;
-- validar, mapear e apresentar prévia antes da importação;
+- validar, mapear e apresentar prévia antes da importação — **concluído para o contrato tabular do SECC**;
 - implementar fila de revisão, conflitos, aprovação e rejeição — **fila, aprovação e rejeição concluídas; tratamento especializado de conflitos pendente**;
 - impedir publicação automática de qualquer upload.
 
