@@ -164,3 +164,19 @@ textarea { min-height: 92px; resize: vertical; }
   .metric-strip { grid-template-columns: 1fr; }
   .chart-row { grid-template-columns: 90px minmax(0, 1fr) 28px; }
 }
+
+.import-layout { align-items: stretch; }
+.import-contract dl { display: grid; gap: .85rem; margin: 1rem 0 0; }
+.import-contract dl div { border-top: 1px solid var(--line); padding-top: .7rem; }
+.import-contract dt { color: var(--muted); font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.import-contract dd { margin: .25rem 0 0; }
+.import-preview { border: 1px solid var(--line); border-radius: 1rem; padding: 1.25rem; }
+.import-summary { margin: 1rem 0; }
+.import-confirm { align-items: center; background: #f1f3ef; border-radius: .85rem; display: flex; gap: 1rem; justify-content: space-between; margin-top: 1rem; padding: 1rem; }
+.import-confirm p { margin: 0; max-width: 760px; }
+.import-preview td .status.rejected { display: inline-block; max-width: 360px; white-space: normal; }
+
+@media (max-width: 820px) {
+  .import-confirm { align-items: stretch; flex-direction: column; }
+  .import-preview { padding: .85rem; }
+}
