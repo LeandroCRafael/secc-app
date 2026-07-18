@@ -59,7 +59,9 @@ export async function collectCvmDfpAction(formData: FormData): Promise<never> {
     const inserted = await repository.submitProposals(proposals, batchAudit);
     revalidatePath("/admin"); revalidatePath("/admin/empresas"); revalidatePath("/admin/cvm"); revalidatePath("/admin/revisoes"); revalidatePath("/admin/auditoria"); revalidatePath("/admin/banco");
     revalidatePath(safeCompanyReturnPath(value(formData, "returnTo"), companyId));
-    outcome = inserted === 0 ? `DFP ${year} já havia sido coletada; nenhuma duplicata criada.` : `${inserted} propostas da DFP ${year} enviadas para revisão.`;
+    outcome = inserted === 0
+      ? `DFP ${year} já está protegida por uma decisão posterior; nenhuma proposta foi alterada.`
+      : `${inserted} propostas da DFP ${year} criadas ou atualizadas na revisão.`;
   } catch (error) {
     const message = error instanceof Error ? error.message : "Falha não identificada.";
     outcome = `Coleta não concluída: ${message}`;

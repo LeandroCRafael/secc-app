@@ -374,7 +374,19 @@ export class PostgresOperationalRepository implements OperationalRepository {
             ${proposal.createdAt}, ${proposal.version}, ${proposal.notes ?? null},
             ${proposal.publishAuthorized}, ${proposal.externalKey ?? null}
           )
-          on conflict (external_key) do nothing
+          on conflict (external_key) do update set
+            source_id = excluded.source_id,
+            value_numeric = excluded.value_numeric,
+            value_text = excluded.value_text,
+            unit = excluded.unit,
+            availability = excluded.availability,
+            status = 'under_review',
+            created_by = excluded.created_by,
+            version = proposals.version + 1,
+            notes = excluded.notes,
+            publish_authorized = false,
+            updated_at = excluded.created_at
+          where proposals.status in ('submitted', 'under_review', 'conflicted')
           returning id
         `;
         inserted += rows.length;
