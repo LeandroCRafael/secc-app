@@ -83,7 +83,7 @@ function requireSheet(workbook: ExcelJS.Workbook, name: string): ExcelJS.Workshe
   return sheet;
 }
 
-async function withoutLegacyComments(source: Buffer): Promise<Buffer> {
+export async function withoutLegacyComments(source: Buffer): Promise<Buffer> {
   const zip = await JSZip.loadAsync(source);
   for (const [name, file] of Object.entries(zip.files)) {
     const normalized = name.toLowerCase();

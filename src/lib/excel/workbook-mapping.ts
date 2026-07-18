@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import ExcelJS from "exceljs";
-import { normalizeCompanyName } from "@/lib/workbook/master-workbook";
+import { normalizeCompanyName, withoutLegacyComments } from "@/lib/workbook/master-workbook";
 import type { Company, DataPoint, Proposal } from "@/types/domain";
 import type {
   WorkbookCellValue,
@@ -45,10 +45,11 @@ function definition(
   aliases: string[] = [],
 ): ColumnDefinition {
   const market = sheetName === marketSheet;
+  const financial = sheetName === financialSheet;
   return {
     sheetName,
-    headerRow: 5,
-    dataStartRow: 6,
+    headerRow: financial ? 5 : 4,
+    dataStartRow: financial ? 6 : 5,
     companyColumn: 1,
     yearColumn: market ? 3 : 2,
     column,
@@ -238,7 +239,8 @@ function readMetadata(workbook: ExcelJS.Workbook): { workbookVersion: string; da
 
 async function loadWorkbook(source: Buffer): Promise<ExcelJS.Workbook> {
   const workbook = new ExcelJS.Workbook();
-  await workbook.xlsx.load(source as unknown as Parameters<typeof workbook.xlsx.load>[0]);
+  const readableSource = await withoutLegacyComments(source);
+  await workbook.xlsx.load(readableSource as unknown as Parameters<typeof workbook.xlsx.load>[0]);
   return workbook;
 }
 
