@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="16" fill="#153f35"/>
+  <path d="M15 23h34v6H15zm0 12h34v6H15z" fill="#f4f2eb" opacity=".35"/>
+  <text x="32" y="38" text-anchor="middle" fill="#fffdf8" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">SECC</text>
+</svg>

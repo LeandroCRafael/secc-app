@@ -1,0 +1,25 @@
+{
+  "releaseId": "secc-public-showcase-2026-07-18",
+  "version": "showcase-2026.07",
+  "referenceDate": "2026-07-18",
+  "generatedAt": "2026-07-18T18:00:00-03:00",
+  "sourceBaseline": "secc-d1",
+  "schema": "secc-public-showcase-v1",
+  "counts": {
+    "portfolioCompanies": 192,
+    "publishedCompanyCases": 3,
+    "scoreDimensions": 6,
+    "sources": 5
+  },
+  "files": {
+    "showcase.json": {
+      "sha256": "63e7d93e85edee422414aa8e7863da3d7b842a6e106a4767cd51a0e142ed08c1"
+    }
+  },
+  "publicationDecision": "approved-for-public-showcase",
+  "limitations": [
+    "Snapshot sanitizado; não contém arquivos brutos, caminhos locais, credenciais ou evidências privadas.",
+    "Casos identificados são recortes demonstrativos em conferência e não equivalem à release acadêmica final.",
+    "Score experimental sem calibração estatística ou uso decisório autorizado."
+  ]
+}
