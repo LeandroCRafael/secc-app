@@ -3,7 +3,7 @@ import { isPublicPreview } from "@/lib/runtime/public-preview";
 
 const links = [
   ["Empresas", "/empresas"], ["Comparar", "/comparar"], ["Metodologia", "/metodologia"],
-  ["Dados", "/dados"], ["Construindo", "/construindo"], ["Sobre", "/sobre"]
+  ["Dados", "/dados"], ["Plataforma", "/plataforma"], ["Sobre", "/sobre"]
 ] as const;
 
 export function SiteHeader() {

@@ -14,3 +14,9 @@ privado, nunca neste diretório do GitHub.
 Nenhum arquivo migra de `generated/` para `public/` sem manifesto, aprovação e controles de
 privacidade, proveniência e reconciliação.
 
+## Snapshot público em uso
+
+`public/showcase.json` sustenta as páginas sem autenticação. Ele contém apenas contagens agregadas,
+três recortes de empresas selecionadas, indicadores derivados, metodologia, fontes institucionais e
+limitações. O arquivo não contém evidências privadas, observações integrais, caminhos locais ou
+credenciais. Seu hash e suas contagens são reconciliados em `public/manifest.json`.

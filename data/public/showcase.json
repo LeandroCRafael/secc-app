@@ -1,0 +1,156 @@
+{
+  "release": {
+    "id": "secc-public-showcase-2026-07-18",
+    "version": "showcase-2026.07",
+    "referenceDate": "2026-07-18",
+    "generatedAt": "2026-07-18T18:00:00-03:00",
+    "baselineVersion": "secc-d1",
+    "mappingVersion": "secc-map-v1",
+    "scope": "Recorte público sanitizado para demonstração do produto. A base analítica completa permanece na área protegida."
+  },
+  "portfolio": {
+    "companies": 192,
+    "tier1": 85,
+    "tier2": 86,
+    "toResearch": 21,
+    "collectedForReview": 50,
+    "inProgress": 33,
+    "blocked": 109,
+    "financialCompanyYears": 910,
+    "qualitativeCompanyYears": 780,
+    "marketCompanyYears": 472
+  },
+  "score": {
+    "version": "0.1.0-experimental",
+    "analysisWindow": "t-1",
+    "minimumCoverage": 60,
+    "minimumDimensions": 4,
+    "dimensions": [
+      { "name": "Margem EBIT", "weight": 20 },
+      { "name": "Margem líquida", "weight": 15 },
+      { "name": "Liquidez corrente", "weight": 15 },
+      { "name": "Dívida líquida / ativos", "weight": 20 },
+      { "name": "Patrimônio líquido / ativos", "weight": 15 },
+      { "name": "FCO / receita", "weight": 15 }
+    ]
+  },
+  "companies": [
+    {
+      "slug": "teka",
+      "name": "Teka",
+      "ticker": "TEKA3",
+      "tier": "T1",
+      "entityType": "Listada",
+      "sector": "Têxtil e vestuário",
+      "eventYear": 2012,
+      "collectionWindow": "2007–2016",
+      "collectionStatus": "Coletado — em conferência",
+      "completion": 75,
+      "analysisYear": 2011,
+      "score": 94,
+      "scoreBand": "Sinais muito elevados",
+      "scoreCoverage": 100,
+      "metrics": {
+        "revenue": 264.81,
+        "ebitMargin": -13.68,
+        "netMargin": -73.51,
+        "currentRatio": 0.16,
+        "netDebtAssets": 52.57,
+        "equityAssets": -171.24,
+        "operatingCashMargin": -28.33
+      },
+      "sourceSummary": "Demonstrações financeiras consolidadas, base Economatica e conferência documental CVM/RI.",
+      "sourceUrl": "https://institucional.teka.com.br/relacao-com-investidores/",
+      "publicNote": "Recorte t-1. Valores financeiros em R$ milhões; indicadores derivados pelo SECC."
+    },
+    {
+      "slug": "pet-manguinhos",
+      "name": "Pet Manguinhos",
+      "ticker": "RPMG3",
+      "tier": "T1",
+      "entityType": "Listada",
+      "sector": "Petróleo e refino",
+      "eventYear": 2013,
+      "collectionWindow": "2008–2017",
+      "collectionStatus": "Coletado — em conferência",
+      "completion": 75,
+      "analysisYear": 2012,
+      "score": 80,
+      "scoreBand": "Sinais muito elevados",
+      "scoreCoverage": 100,
+      "metrics": {
+        "revenue": 1862.78,
+        "ebitMargin": -16.91,
+        "netMargin": -19.69,
+        "currentRatio": 0.46,
+        "netDebtAssets": 11.68,
+        "equityAssets": -163.60,
+        "operatingCashMargin": -21.45
+      },
+      "sourceSummary": "Demonstrações financeiras consolidadas, base Economatica e conferência documental CVM.",
+      "sourceUrl": "https://www.gov.br/cvm/pt-br",
+      "publicNote": "Recorte t-1. Valores financeiros em R$ milhões; indicadores derivados pelo SECC."
+    },
+    {
+      "slug": "bardella",
+      "name": "Bardella",
+      "ticker": "BDLL4",
+      "tier": "T1",
+      "entityType": "Listada",
+      "sector": "Bens industriais",
+      "eventYear": 2019,
+      "collectionWindow": "2014–2023",
+      "collectionStatus": "Coletado — em conferência",
+      "completion": 75,
+      "analysisYear": 2018,
+      "score": 80,
+      "scoreBand": "Sinais muito elevados",
+      "scoreCoverage": 100,
+      "metrics": {
+        "revenue": 93.70,
+        "ebitMargin": -83.46,
+        "netMargin": -102.31,
+        "currentRatio": 0.78,
+        "netDebtAssets": 25.72,
+        "equityAssets": 12.98,
+        "operatingCashMargin": -68.05
+      },
+      "sourceSummary": "Demonstrações financeiras consolidadas, base Economatica e conferência documental CVM.",
+      "sourceUrl": "https://www.gov.br/cvm/pt-br",
+      "publicNote": "Recorte t-1. Valores financeiros em R$ milhões; indicadores derivados pelo SECC."
+    }
+  ],
+  "sources": [
+    {
+      "name": "CVM",
+      "role": "Cadastro de companhias e demonstrações financeiras padronizadas",
+      "status": "Conector operacional"
+    },
+    {
+      "name": "Planilha mestre SECC",
+      "role": "Baseline, janelas relativas, dados coletados e diagnóstico de cobertura",
+      "status": "Sincronização controlada"
+    },
+    {
+      "name": "Economatica e B3",
+      "role": "Séries financeiras e informações de mercado para companhias listadas",
+      "status": "Fontes catalogadas"
+    },
+    {
+      "name": "RI, administradores judiciais e tribunais",
+      "role": "Documentos societários, processuais e eventos de reestruturação",
+      "status": "Pesquisa documental"
+    },
+    {
+      "name": "Banco Central — SGS",
+      "role": "Contexto macroeconômico e setorial",
+      "status": "Fonte catalogada"
+    }
+  ],
+  "limitations": [
+    "A release pública é um recorte sanitizado e não reproduz a planilha mestre.",
+    "Os três casos exibidos ainda estão em conferência na base de pesquisa.",
+    "O score é heurístico, experimental e não foi calibrado como probabilidade de default.",
+    "O conteúdo tem finalidade acadêmica e informacional; não constitui rating, recomendação de crédito ou investimento."
+  ]
+}
