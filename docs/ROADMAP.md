@@ -46,11 +46,15 @@ assíncrono permanecem nas fases seguintes.
 ## Fase 4 — Sincronização com Excel
 
 - manter Microsoft Graph fora do escopo enquanto a planilha estiver em OneDrive pessoal;
-- implementar o modo de intercâmbio de arquivo versionado — **modo selecionado**;
-- criar backup, comparação de versões e idempotência;
-- atualizar o Excel em lote somente com dados aprovados;
-- importar alterações do Excel como propostas para revisão;
-- disponibilizar painel de status da sincronização para o Estevão.
+- implementar o modo de intercâmbio de arquivo versionado — **concluído**;
+- criar backup, comparação de versões e idempotência — **concluído com SHA-256, snapshots de células e chave determinística**;
+- atualizar o Excel em lote somente com dados aprovados — **concluído para o de-para v1 financeiro, qualitativo e mercado**;
+- importar alterações do Excel como propostas para revisão — **concluído para células controladas sem fórmula**;
+- disponibilizar painel de status da sincronização para o Estevão — **concluído com prévia, conflitos e histórico de lotes**.
+
+Marco de 17/07/2026: Incremento 4 implementado como intercâmbio XLSX adequado ao OneDrive pessoal.
+O arquivo bruto transita apenas na requisição; banco e auditoria persistem snapshots lógicos, hashes,
+diff por célula e resultado do lote. A substituição do mestre permanece manual e deliberada.
 
 ## Fase 5 — Interface pública navegável
 

@@ -8,7 +8,8 @@ if (!databaseUrl) {
 
 const expectedTables = [
   "audit_events", "companies", "company_coverage", "import_batches", "import_rows",
-  "proposals", "review_decisions", "sources",
+  "proposals", "review_decisions", "sources", "workbook_snapshots",
+  "workbook_snapshot_cells", "workbook_sync_batches", "workbook_sync_items",
 ];
 const sql = postgres(databaseUrl, { max: 1, connect_timeout: 10 });
 

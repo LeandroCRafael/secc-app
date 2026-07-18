@@ -79,8 +79,10 @@ npm run build
 - aprovação/rejeição com justificativa, versão esperada e auditoria atômica; prévia de release ainda demonstrativa;
 - importação estruturada de CSV/XLSX com allowlist, limite, MIME, assinatura, prévia persistida,
   validação por linha, idempotência e envio controlado de propostas à revisão;
-- intercâmbio local com leitura de XLSX, backup da origem, staging de propostas aprovadas,
-  deduplicação por proposta e download de uma nova versão para conferência;
+- sincronização bidirecional do XLSX mestre com prévia por célula, SHA-256, versão do de-para,
+  backup obrigatório, resolução explícita de conflitos e geração de uma nova versão completa;
+- alterações feitas no Excel detectadas contra o último snapshot e enviadas como propostas
+  idempotentes à fila de revisão, sem sobrescrever registros aprovados;
 - contratos separados entre domínio operacional, importação, Excel e publicação.
 - schema PostgreSQL versionado e repositório operacional server-only para empresas, propostas,
   decisões e auditoria.
@@ -91,8 +93,10 @@ npm run build
 
 - a autenticação ainda usa um único administrador compartilhado; cadastro, proposta, revisão e
   auditoria já persistem no PostgreSQL, sempre separados da publicação;
-- a sincronização escreve somente na aba controlada `SECC_App_Staging`; o de-para para as nove abas
-  da planilha oficial ainda depende da validação do arquivo e do mapeamento usados pelo Estevão;
+- o de-para v1 cobre as abas de dados financeiros, qualitativos e de mercado da planilha mestre;
+  macro, fontes, glossário e campos de observação ainda não recebem escrita automática;
+- por se tratar de OneDrive pessoal, o backup e a substituição da planilha oficial continuam como
+  atos manuais do administrador; o servidor não armazena o XLSX bruto nem depende de filesystem persistente;
 - a importação estruturada persiste hash, metadados e linhas normalizadas; o arquivo bruto é processado
   de forma transitória e ainda não é mantido em object storage;
 - a vitrine pública demonstrativa permanece separada; o diagnóstico interno persiste no PostgreSQL gerenciado;

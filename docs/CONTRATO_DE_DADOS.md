@@ -106,7 +106,8 @@ Cada execução deve conter:
 - resultado por registro;
 - `resultWorkbookVersion`;
 - usuário solicitante, aprovador e horário;
-- status: preparado, bloqueado, aplicado, parcial, revertido ou falhou.
+- status persistido: preparado, bloqueado, aplicado ou falhou;
+- decisão por conflito: usar o valor aprovado no app ou manter o Excel e criar proposta de revisão.
 
 Se a versão atual da planilha divergir da versão esperada, a execução é bloqueada e gera conflito.
 

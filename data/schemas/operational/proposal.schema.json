@@ -10,7 +10,7 @@
     "year": { "type": "integer", "minimum": 1900, "maximum": 2200 },
     "variable": { "type": "string", "minLength": 2 },
     "value": { "type": ["number", "string", "null"] },
-    "unit": { "enum": ["BRL_millions", "percent", "count", "text"] },
+    "unit": { "enum": ["BRL", "BRL_millions", "percent", "count", "count_millions", "text"] },
     "availability": { "enum": ["available", "not_researched", "unavailable", "not_applicable", "future_period", "withheld", "under_review", "conflicted", "rejected"] },
     "status": { "enum": ["draft", "submitted", "under_review", "approved", "rejected", "synchronized", "published", "conflicted"] },
     "version": { "type": "integer", "minimum": 1 }

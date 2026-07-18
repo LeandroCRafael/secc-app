@@ -37,7 +37,7 @@ export interface DataPoint {
   year: number;
   variable: string;
   value: number | string | null;
-  unit: "BRL_millions" | "percent" | "count" | "text";
+  unit: "BRL" | "BRL_millions" | "percent" | "count" | "count_millions" | "text";
   availability: AvailabilityState;
   sourceId: string | null;
   validationStatus: WorkflowStatus;

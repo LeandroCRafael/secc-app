@@ -75,6 +75,17 @@ Alternativa para OneDrive pessoal ou quando não houver autorização para integ
 
 Este é o modo selecionado para a etapa local, pois a planilha oficial está em OneDrive pessoal.
 
+### Implementação vigente do modo B
+
+- limite de 4 MB e aceitação exclusiva de XLSX sem macros;
+- validação dos cabeçalhos e do de-para `secc-map-v1` antes de criar o lote;
+- snapshot lógico das células controladas, sem persistir o arquivo bruto no servidor;
+- prévia separando escrita direta, valor já conciliado, conflito e item sem de-para;
+- backup baixado pelo administrador antes de liberar a aplicação;
+- reenvio do mesmo arquivo na aplicação e bloqueio se o SHA-256 diferir da prévia;
+- aba técnica `SECC_App_Sync` muito oculta, com lote, versões e contagens;
+- geração de nova versão para download, sem alterar o arquivo selecionado no lugar.
+
 ### Publicação no OneDrive
 
 O arquivo oficial não será compartilhado publicamente. Quando houver autorização, o pipeline gerará

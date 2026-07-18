@@ -16,7 +16,8 @@ export const dynamic = "force-dynamic";
 type Search = { cvmQ?: string; message?: string };
 
 const unitLabels: Record<Proposal["unit"], string> = {
-  BRL_millions: "R$ milhões", percent: "%", count: "contagem", text: "texto",
+  BRL: "R$", BRL_millions: "R$ milhões", percent: "%",
+  count: "contagem", count_millions: "contagem em milhões", text: "texto",
 };
 
 function percent(filled = 0, expected = 0): number {
