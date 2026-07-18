@@ -117,8 +117,10 @@ function mapRecord(record: RawRecord, headers: Map<number, CanonicalHeader>, ori
 
 function parseUnit(value: unknown): Proposal["unit"] | null {
   const unit = normalize(value).replace(/\s+/g, "_");
+  if (["brl", "r$", "reais", "real"].includes(unit)) return "BRL";
   if (["brl_millions", "r$_milhoes", "r$milhoes", "r_milhoes", "milhoes", "rs_milhoes"].includes(unit)) return "BRL_millions";
   if (["percent", "percentual", "%", "porcentagem"].includes(unit)) return "percent";
+  if (["count_millions", "contagem_milhoes", "quantidade_milhoes", "milhoes_unidades"].includes(unit)) return "count_millions";
   if (["count", "contagem", "quantidade"].includes(unit)) return "count";
   if (["text", "texto"].includes(unit)) return "text";
   return null;

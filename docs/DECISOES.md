@@ -100,3 +100,16 @@ dados em volume Docker nomeado e cliente do Next.js inicializado apenas no servi
 do banco sejam sincronizados pelo OneDrive.  
 **Consequência:** credenciais permanecem em arquivos locais ignorados; a conexão pode ser substituída
 por um serviço gerenciado sem acoplar componentes de interface ao fornecedor.
+
+## ADR-016 — XLSX transitório e snapshot lógico persistido
+
+**Decisão:** no modo OneDrive pessoal, o navegador envia a versão atual para prévia e novamente para
+aplicação; o servidor valida o mesmo SHA-256, persiste somente metadados e células controladas e devolve
+o XLSX completo na própria resposta.
+
+**Motivo:** a Vercel não oferece filesystem persistente e o Incremento 4 não justifica contratar object
+storage apenas para manter uma cópia transitória que o administrador já possui.
+
+**Consequência:** backup e substituição do mestre são confirmações locais obrigatórias; hashes, versões,
+itens, conflitos, decisões e auditoria permanecem duráveis no PostgreSQL. Uma futura integração Graph ou
+Blob poderá reutilizar o contrato sem alterar o de-para e as regras de domínio.

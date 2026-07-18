@@ -9,7 +9,7 @@ export const proposalInputSchema = z
     year: z.number().int().min(1900).max(2200),
     variable: z.string().trim().min(2).max(100),
     value: typedValue,
-    unit: z.enum(["BRL_millions", "percent", "count", "text"]),
+    unit: z.enum(["BRL", "BRL_millions", "percent", "count", "count_millions", "text"]),
     availability: z.enum(availabilityStates),
     sourceOrganization: z.string().trim().min(2).max(160),
     sourceTitle: z.string().trim().min(2).max(200),
@@ -26,7 +26,7 @@ export const proposalInputSchema = z
     if (input.availability !== "available" && input.value !== null) {
       ctx.addIssue({ code: "custom", path: ["value"], message: "Estados de ausência não recebem valor." });
     }
-    if (input.unit === "BRL_millions" && typeof input.value === "number") {
+    if (["BRL", "BRL_millions"].includes(input.unit) && typeof input.value === "number") {
       const decimals = input.value.toString().split(".")[1]?.length ?? 0;
       if (decimals > 2) {
         ctx.addIssue({ code: "custom", path: ["value"], message: "Use no máximo duas casas decimais." });

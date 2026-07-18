@@ -29,7 +29,7 @@ export function ProposalForm({ companies, selectedCompanyId, defaultYear, return
     <label>Ano<input name="year" type="number" min="1900" max="2200" defaultValue={defaultYear ?? 2020} required /></label>
     <label>Variável<input name="variable" list="secc-variables" defaultValue="Receita Líquida" required /><datalist id="secc-variables">{variables.map((variable) => <option key={variable} value={variable}/>)}</datalist></label>
     <label>Valor<input name="value" inputMode="decimal" /></label>
-    <label>Unidade<select name="unit" defaultValue="BRL_millions"><option value="BRL_millions">R$ milhões</option><option value="percent">Percentual</option><option value="count">Contagem</option><option value="text">Texto</option></select></label>
+    <label>Unidade<select name="unit" defaultValue="BRL_millions"><option value="BRL">R$</option><option value="BRL_millions">R$ milhões</option><option value="percent">Percentual</option><option value="count">Contagem</option><option value="count_millions">Contagem em milhões</option><option value="text">Texto</option></select></label>
     <label>Disponibilidade<select name="availability" defaultValue="available"><option value="available">Disponível</option><option value="unavailable">N/D</option><option value="not_researched">Não pesquisado</option><option value="not_applicable">Não aplicável</option><option value="future_period">Período futuro</option></select></label>
     <label>Organização da fonte<input name="sourceOrganization" placeholder="CVM, companhia, B3, administrador judicial…" required /></label>
     <label>Data de referência<input name="referenceDate" type="date" required /></label>

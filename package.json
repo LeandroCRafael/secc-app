@@ -17,6 +17,7 @@
     "db:migrate": "node --env-file=.env.local scripts/migrate-database.mjs",
     "db:migrate:data": "node --env-file=.env.local scripts/migrate-operational-data.mjs",
     "db:schema:check": "node --env-file=.env.local scripts/check-database-schema.mjs",
+    "db:sync:check": "node --env-file=.env.local scripts/check-workbook-sync.mjs",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",

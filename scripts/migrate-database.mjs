@@ -28,13 +28,14 @@ try {
 
   for (const name of migrationNames) {
     const migrationSql = await readFile(path.join(migrationsDirectory, name), "utf8");
-    const checksum = createHash("sha256").update(migrationSql).digest("hex");
+    const checksum = createHash("sha256").update(migrationSql.replace(/\r\n/g, "\n")).digest("hex");
+    const platformChecksum = createHash("sha256").update(migrationSql).digest("hex");
     const [existing] = await connection`
       select checksum_sha256 from schema_migrations where name = ${name}
     `;
 
     if (existing) {
-      if (existing.checksum_sha256 !== checksum) {
+      if (![checksum, platformChecksum].includes(existing.checksum_sha256)) {
         throw new Error(`Migration já aplicada foi alterada: ${name}`);
       }
       console.log(`${name}: já aplicada`);
