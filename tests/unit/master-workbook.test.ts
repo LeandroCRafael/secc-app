@@ -1,6 +1,32 @@
 import ExcelJS from "exceljs";
 import { describe, expect, it } from "vitest";
-import { parseMasterWorkbook } from "@/lib/workbook/master-workbook";
+import JSZip from "jszip";
+import { parseMasterWorkbook, withoutLegacyComments } from "@/lib/workbook/master-workbook";
+
+describe("saneamento do XLSX mestre", () => {
+  it("remove comentários legados, VML e seus relacionamentos antes da leitura", async () => {
+    const zip = new JSZip();
+    zip.file("xl/comments1.xml", "<comments />");
+    zip.file("xl/drawings/vmlDrawing1.vml", "<xml />");
+    zip.file(
+      "xl/worksheets/_rels/sheet1.xml.rels",
+      '<Relationships><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments" Target="../comments1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/vmlDrawing" Target="../drawings/vmlDrawing1.vml"/></Relationships>',
+    );
+    zip.file(
+      "xl/worksheets/sheet1.xml",
+      '<worksheet><sheetData/><legacyDrawing r:id="rId2"/></worksheet>',
+    );
+
+    const sanitized = await withoutLegacyComments(await zip.generateAsync({ type: "nodebuffer" }));
+    const result = await JSZip.loadAsync(sanitized);
+
+    expect(result.file("xl/comments1.xml")).toBeNull();
+    expect(result.file("xl/drawings/vmlDrawing1.vml")).toBeNull();
+    expect(await result.file("xl/worksheets/_rels/sheet1.xml.rels")?.async("string")).not.toContain("comments");
+    expect(await result.file("xl/worksheets/_rels/sheet1.xml.rels")?.async("string")).not.toContain("vmlDrawing");
+    expect(await result.file("xl/worksheets/sheet1.xml")?.async("string")).not.toContain("legacyDrawing");
+  });
+});
 
 async function workbookBuffer(): Promise<Buffer> {
   const workbook = new ExcelJS.Workbook();

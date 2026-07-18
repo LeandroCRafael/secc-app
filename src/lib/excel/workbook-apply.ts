@@ -2,55 +2,8 @@ import { createHash } from "node:crypto";
 import type ExcelJS from "exceljs";
 import type { Company } from "@/types/domain";
 import type { WorkbookSyncApplication, WorkbookSyncBatch, WorkbookSyncItem, WorkbookSyncResolution } from "./sync-contracts";
-import { extractCells, loadWorkbook, metadataSheet, workbookMappingVersion } from "./workbook-mapping";
-
-const metadataHeaders = [
-  "batch_id",
-  "aplicado_em",
-  "sha256_origem",
-  "source_workbook_version",
-  "result_workbook_version",
-  "data_version",
-  "mapping_version",
-  "propostas_sincronizadas",
-  "conflitos_mantidos_excel",
-  "alteracoes_excel_importadas",
-] as const;
-
-function writeMetadata(
-  workbook: ExcelJS.Workbook,
-  batch: WorkbookSyncBatch,
-  appliedAt: string,
-  appliedCount: number,
-  keptCount: number,
-  excelChangeCount: number,
-): void {
-  let sheet = workbook.getWorksheet(metadataSheet);
-  if (!sheet) {
-    sheet = workbook.addWorksheet(metadataSheet, { state: "veryHidden" });
-    sheet.addRow([...metadataHeaders]);
-    sheet.getRow(1).font = { bold: true };
-  } else {
-    const actual = metadataHeaders.map((_, index) => String(sheet!.getCell(1, index + 1).value ?? ""));
-    if (actual.some((value, index) => value !== metadataHeaders[index])) {
-      throw new Error(`A aba técnica ${metadataSheet} existe com contrato incompatível.`);
-    }
-  }
-  const dataVersion = Number(batch.resultWorkbookVersion.match(/d(\d+)$/)?.[1] ?? 0);
-  sheet.addRow([
-    batch.id,
-    appliedAt,
-    batch.sourceSha256,
-    batch.sourceWorkbookVersion,
-    batch.resultWorkbookVersion,
-    dataVersion,
-    workbookMappingVersion,
-    appliedCount,
-    keptCount,
-    excelChangeCount,
-  ]);
-  sheet.state = "veryHidden";
-}
+import { extractCells, loadWorkbook, workbookMappingVersion } from "./workbook-mapping";
+import { patchWorkbookArchive } from "./workbook-archive";
 
 export async function applyWorkbookSync(input: {
   source: Buffer;
@@ -74,6 +27,7 @@ export async function applyWorkbookSync(input: {
   const excelChangeItems = input.items.filter((item) => item.direction === "excel_to_app" && item.status === "ready");
   const appliedProposalIds: string[] = [];
   const keptExcelProposalIds: string[] = [];
+  const updates: Array<{ sheetName: string; cellAddress: string; value: WorkbookSyncItem["proposedValue"] }> = [];
 
   for (const item of appItems) {
     if (item.status === "unmapped" || !item.proposalId) throw new Error(item.message);
@@ -90,23 +44,30 @@ export async function applyWorkbookSync(input: {
       const sheet = workbook.getWorksheet(item.sheetName);
       if (!sheet) throw new Error(`A aba ${item.sheetName} não foi localizada na aplicação.`);
       sheet.getCell(item.cellAddress).value = item.proposedValue as ExcelJS.CellValue;
+      updates.push({ sheetName: item.sheetName, cellAddress: item.cellAddress, value: item.proposedValue });
     }
     appliedProposalIds.push(item.proposalId);
   }
 
-  writeMetadata(
-    workbook,
-    input.batch,
-    input.appliedAt,
-    appliedProposalIds.length,
-    keptExcelProposalIds.length,
-    excelChangeItems.length + keptExcelProposalIds.length,
-  );
-  workbook.calcProperties.fullCalcOnLoad = true;
   const resultCells = extractCells(workbook, input.companies);
-  const output = Buffer.from(await workbook.xlsx.writeBuffer());
-  const resultSha256 = createHash("sha256").update(output).digest("hex");
   const dataVersion = Number(input.batch.resultWorkbookVersion.match(/d(\d+)$/)?.[1] ?? 0);
+  const output = await patchWorkbookArchive({
+    source: input.source,
+    updates,
+    metadata: {
+      batchId: input.batch.id,
+      appliedAt: input.appliedAt,
+      sourceSha256: input.batch.sourceSha256,
+      sourceWorkbookVersion: input.batch.sourceWorkbookVersion,
+      resultWorkbookVersion: input.batch.resultWorkbookVersion,
+      dataVersion,
+      mappingVersion: workbookMappingVersion,
+      appliedCount: appliedProposalIds.length,
+      keptCount: keptExcelProposalIds.length,
+      excelChangeCount: excelChangeItems.length + keptExcelProposalIds.length,
+    },
+  });
+  const resultSha256 = createHash("sha256").update(output).digest("hex");
 
   return {
     workbook: output,

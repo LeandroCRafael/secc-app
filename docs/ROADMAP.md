@@ -86,6 +86,12 @@ eventos pendentes, escalas suspeitas e dados ainda não sincronizados permanecem
 
 ## Fase 7 — Metodologia de score
 
+Marco de 18/07/2026: Incremento 7 inaugura o laboratório protegido com a versão
+`0.1.0-experimental`. O baseline heurístico usa somente o exercício `t-1`, exige cobertura mínima,
+expõe pesos, contribuições e células-fonte e bloqueia o cálculo quando a evidência é insuficiente.
+Ainda não há variável-alvo, probabilidade de default, calibração ou validação temporal; portanto o
+índice não constitui rating nem recomendação de crédito ou investimento.
+
 - formular objetivo e variável-alvo;
 - definir amostra, janelas e prevenção de vazamento de informação;
 - selecionar variáveis e tratamento de ausentes;
