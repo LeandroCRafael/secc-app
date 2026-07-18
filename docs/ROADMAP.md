@@ -60,7 +60,7 @@ diff por célula e resultado do lote. A substituição do mestre permanece manua
 
 - definir identidade visual e sistema de componentes;
 - criar portfólio, lista de empresas e Empresa 360 — **Empresa 360 interna concluída sobre linha de base controlada; exposição pública continua bloqueada**;
-- criar comparador, metodologia, dados e sobre;
+- criar comparador, metodologia, dados e sobre — **comparador executivo interno concluído; versão pública permanece demonstrativa**;
 - exibir somente releases aprovados e sanitizados;
 - tratar cobertura, ausentes, erros e fontes — **concluído na Empresa 360 interna, inclusive separação entre sincronizado e em revisão**;
 - validar responsividade, acessibilidade e desempenho.
@@ -69,6 +69,11 @@ Marco de 18/07/2026: Incremento 5 estabelece uma coorte piloto de oito empresas 
 cobertura, preserva o XLSX como linha de base auditável e calcula indicadores somente sobre valores
 sincronizados. O catálogo financeiro, qualitativo e de mercado é compartilhável com o comparador do
 Incremento 6. Propostas pendentes são visíveis, mas não alteram séries ou conclusões.
+
+Marco de 18/07/2026: Incremento 6 entrega comparação protegida de até quatro empresas da coorte piloto.
+A análise prioriza cobertura e prontidão, alinha trajetórias financeiras pelo evento (`t-2` a `t+2`),
+normaliza métricas elegíveis em `t-1 = 100` e reutiliza os indicadores da Empresa 360. Ausências,
+eventos pendentes, escalas suspeitas e dados ainda não sincronizados permanecem explicitamente fora dos cálculos.
 
 ## Fase 6 — GitHub e Vercel
 
