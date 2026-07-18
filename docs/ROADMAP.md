@@ -59,11 +59,16 @@ diff por célula e resultado do lote. A substituição do mestre permanece manua
 ## Fase 5 — Interface pública navegável
 
 - definir identidade visual e sistema de componentes;
-- criar portfólio, lista de empresas e Empresa 360;
+- criar portfólio, lista de empresas e Empresa 360 — **Empresa 360 interna concluída sobre linha de base controlada; exposição pública continua bloqueada**;
 - criar comparador, metodologia, dados e sobre;
 - exibir somente releases aprovados e sanitizados;
-- tratar cobertura, ausentes, erros e fontes;
+- tratar cobertura, ausentes, erros e fontes — **concluído na Empresa 360 interna, inclusive separação entre sincronizado e em revisão**;
 - validar responsividade, acessibilidade e desempenho.
+
+Marco de 18/07/2026: Incremento 5 estabelece uma coorte piloto de oito empresas por qualidade de
+cobertura, preserva o XLSX como linha de base auditável e calcula indicadores somente sobre valores
+sincronizados. O catálogo financeiro, qualitativo e de mercado é compartilhável com o comparador do
+Incremento 6. Propostas pendentes são visíveis, mas não alteram séries ou conclusões.
 
 ## Fase 6 — GitHub e Vercel
 
