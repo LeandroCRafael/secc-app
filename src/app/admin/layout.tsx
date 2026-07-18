@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export const metadata = { robots: { index: false, follow: false, nocache: true } };
 
 const adminLinks = [
-  ["Dashboard", "/admin"], ["Visão mestre", "/admin/empresas"], ["Pesquisa CVM", "/admin/cvm"],
+  ["Dashboard", "/admin"], ["Visão mestre", "/admin/empresas"], ["Comparador", "/admin/comparar"], ["Pesquisa CVM", "/admin/cvm"],
   ["Entrada manual", "/admin/pesquisa"], ["Importações", "/admin/importacoes"], ["Revisões", "/admin/revisoes"],
   ["Conflitos", "/admin/conflitos"], ["Sincronização", "/admin/sincronizacao"], ["Auditoria", "/admin/auditoria"],
   ["Banco operacional", "/admin/banco"],

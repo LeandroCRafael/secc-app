@@ -75,6 +75,8 @@ npm run build
   entrada manual, histórico de propostas, contexto de fonte e rastreabilidade;
 - Empresa 360 protegida sobre a mesma rota, com coorte piloto dinâmica, séries da última linha de base
   controlada, indicadores derivados, períodos relativos ao evento, fontes, lacunas e mudanças em fluxo;
+- comparador executivo protegido em `/admin/comparar`, com seleção de até quatro empresas, cobertura
+  lado a lado, indicadores derivados e trajetórias alinhadas de `t-2` a `t+2` sem converter lacunas em zero;
 - pesquisa no cadastro oficial da CVM e coleta de um exercício da DFP em propostas idempotentes,
   sempre submetidas à fila de revisão;
 - formulário manual validado por schema e fila de revisão persistida no PostgreSQL;
