@@ -1,0 +1,12 @@
+/* SECC Tech — corner radius.
+   The technical panel is deliberately squarer than the marketing card. Do not uniformize. */
+:root {
+  --r-xs: 2px;
+  --r-sm: 4px;   /* .secc-panel — technical instrumentation */
+  --r-md: 8px;   /* button, form field */
+  --r-lg: 12px;  /* marketing card */
+  --r-xl: 16px;  /* marketing card, large */
+  --r-2xl: 16px;
+  --r-3xl: 24px;
+  --r-pill: 999px; /* chip, badge */
+}

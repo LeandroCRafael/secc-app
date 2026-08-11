@@ -1,0 +1,45 @@
+/* SECC Tech — spacing, containers, breakpoints, layers. */
+:root {
+  --spacing: 0.25rem; /* Tailwind base unit, 4px */
+
+  /* Own scale — each step is N × 0.5rem */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-6: 48px;
+  --space-8: 64px;
+
+  /* Containers */
+  --container-xs: 20rem;
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
+  --container-3xl: 48rem;
+  --container-4xl: 56rem;
+  --container-5xl: 64rem;
+  --container-6xl: 72rem;  /* page max-width */
+  --container-7xl: 80rem;
+
+  /* Breakpoints (documentary — used in @media by hand) */
+  --bp-sm: 40rem;
+  --bp-md: 48rem;
+  --bp-lg: 64rem;
+  --bp-xl: 80rem;
+  --bp-2xl: 96rem;
+
+  /* Minimum touch target on coarse pointers */
+  --touch-min: 44px;
+
+  /* Z layers */
+  --z-base: 0;
+  --z-sticky: 10;
+  --z-dropdown: 40;
+  --z-sidebar: 50;
+  --z-overlay: 60;
+  --z-modal: 70;
+  --z-toast: 80;
+  --z-tooltip: 90;
+}

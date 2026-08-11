@@ -1,0 +1,54 @@
+/* SECC Tech — typography.
+   IBM Plex Sans: body + headings. JetBrains Mono: numbers, code, technical labels.
+   Weight 900 exists in the original theme but is never loaded — omitted on purpose.
+   App adaptation: families are loaded via next/font in src/app/layout.tsx and exposed
+   as --font-plex / --font-jbmono; the generic tokens keep working via the fallback. */
+:root {
+  --font-sans: var(--font-plex, 'IBM Plex Sans'), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jbmono, 'JetBrains Mono'), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-body: var(--font-sans);
+  --font-display: var(--font-sans);
+  --font-technical: var(--font-mono);
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Fixed scale (Tailwind v4 defaults, as compiled) */
+  --text-xs: 0.75rem;    --text-xs-lh: 1.333;
+  --text-sm: 0.875rem;   --text-sm-lh: 1.429;
+  --text-base: 1rem;     --text-base-lh: 1.5;
+  --text-lg: 1.125rem;   --text-lg-lh: 1.556;
+  --text-xl: 1.25rem;    --text-xl-lh: 1.4;
+  --text-2xl: 1.5rem;    --text-2xl-lh: 1.333;
+  --text-3xl: 1.875rem;  --text-3xl-lh: 1.2;
+  --text-4xl: 2.25rem;   --text-4xl-lh: 1.111;
+  --text-5xl: 3rem;      --text-5xl-lh: 1;
+  --text-6xl: 3.75rem;   --text-6xl-lh: 1;
+  --text-7xl: 4.5rem;    --text-7xl-lh: 1;
+
+  /* Fluid scale — CONSOLIDATED. The source had 28 one-off clamp() values written
+     inline as arbitrary Tailwind classes. These six cover the same amplitude and
+     are all values that already existed in that set. Use these; never write a new clamp. */
+  --fluid-display-xl: clamp(3.4rem, 8vw, 8rem);
+  --fluid-display: clamp(2.75rem, 7vw, 6.5rem);
+  --fluid-h1: clamp(2.5rem, 5.5vw, 4.75rem);
+  --fluid-h2: clamp(2rem, 4vw, 3.25rem);
+  --fluid-h3: clamp(1.75rem, 3.6vw, 2.75rem);
+  --fluid-h4: clamp(1.5rem, 2.4vw, 2rem);
+
+  /* Line heights */
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  /* Tracking */
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+  --tracking-label: 0.5em; /* one-off in the source, on a technical eyebrow label */
+}
