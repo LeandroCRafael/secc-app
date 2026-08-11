@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="16" fill="#153f35"/>
-  <path d="M15 23h34v6H15zm0 12h34v6H15z" fill="#f4f2eb" opacity=".35"/>
-  <text x="32" y="38" text-anchor="middle" fill="#fffdf8" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">SECC</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="8" fill="#070809"/>
+  <rect x="1" y="1" width="62" height="62" rx="7" fill="none" stroke="#5b8bff" stroke-opacity=".34"/>
+  <path d="M4 40h14l4-12 5 22 5-16 4 6h24" fill="none" stroke="#5b8bff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+  <text x="32" y="24" text-anchor="middle" fill="#f5f7fb" font-family="ui-monospace, Menlo, monospace" font-size="14" font-weight="600" letter-spacing="1">SECC</text>
 </svg>

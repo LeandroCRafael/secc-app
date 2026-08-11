@@ -1,15 +1,20 @@
 import Link from "next/link";
 import { publicShowcase } from "@/features/public/public-showcase";
+import { EcgLine } from "@/components/brand/ecg-line";
 
 export default function HomePage() {
   const { portfolio, companies, score, sources, release } = publicShowcase;
 
   return (
-    <main className="shell public-home">
+    <main className="public-home secc-ambient">
+      <span className="hero-orbit hero-orbit-a" aria-hidden="true" />
+      <span className="hero-orbit hero-orbit-b" aria-hidden="true" />
+      <div className="shell">
       <section className="hero public-hero">
         <div>
           <p className="eyebrow">Inteligência financeira aplicada à reestruturação</p>
           <h1>Sinais financeiros antes do evento, com fonte, método e limites visíveis.</h1>
+          <div className="public-hero-ecg" aria-hidden="true"><EcgLine height={56} /></div>
           <p className="lede">
             O SECC organiza empresas brasileiras em estresse ou reestruturação, reconstrói sua trajetória
             financeira e transforma evidências dispersas em análise comparável e auditável.
@@ -80,6 +85,7 @@ export default function HomePage() {
       <section className="section notice public-disclaimer">
         <strong>Uso responsável.</strong> O SECC tem finalidade acadêmica e informacional. O índice exibido é heurístico e experimental: não estima probabilidade de default, não constitui rating e não recomenda crédito ou investimento.
       </section>
+      </div>
     </main>
   );
 }

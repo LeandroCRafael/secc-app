@@ -1,0 +1,42 @@
+/* SECC Tech — document base + signature surface treatments.
+   Section 13 of the source: this ambient layer is what a screenshot flattens and
+   what makes the product read as an instrument rather than a dark template. */
+html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; tab-size: 4 }
+body { margin: 0; background: var(--color-bg); color: var(--text-primary); font-family: var(--font-sans); font-size: var(--text-base); line-height: var(--leading-normal); -webkit-font-smoothing: antialiased }
+a { color: var(--link); text-decoration: none; transition: color var(--transition-default) var(--ease-out) }
+a:hover { color: var(--link-hover) }
+::selection { background: var(--accent-subtle); color: var(--text-primary) }
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px }
+
+/* Technical panel — THE brand signature. 14px L-corners in blue, top-left and
+   bottom-right only. Radius stays at 4px: squarer than a marketing card, on purpose. */
+.secc-panel { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--r-sm); position: relative }
+.secc-panel::before { content: ""; position: absolute; width: 14px; height: 14px; top: -1px; left: -1px; border-top: 2px solid var(--action-accent); border-left: 2px solid var(--action-accent); transform-origin: 0 0 }
+.secc-panel::after { content: ""; position: absolute; width: 14px; height: 14px; bottom: -1px; right: -1px; border-bottom: 2px solid var(--action-accent); border-right: 2px solid var(--action-accent); transform-origin: 100% 100% }
+.secc-panel:hover { border-color: var(--focus-ring); filter: drop-shadow(0 0 6px var(--action-accent-subtle)); transition: transform .25s var(--ease-out-expo), border-color .25s ease, filter .25s ease }
+
+/* Paper grain — horizontal lines at 1.5% every 3px. Nearly invisible, decisive. */
+.secc-paper-grain { position: relative }
+.secc-paper-grain::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: .5; background: repeating-linear-gradient(0deg, color-mix(in srgb, var(--text-primary) 1.5%, transparent) 0 1px, transparent 1px 3px) }
+
+/* Diagonal hatch — block backgrounds */
+.secc-hatch { background-image: repeating-linear-gradient(110deg, color-mix(in srgb, var(--text-primary) 6%, transparent) 0 1px, transparent 1px 16px) }
+
+/* Ambient hero background: color layer + dissolving 80px grid + orbit rings */
+.secc-ambient { position: relative; isolation: isolate; overflow: hidden }
+.secc-ambient::before { content: ""; position: absolute; inset: 0; z-index: -3; background: linear-gradient(180deg, var(--bg-base), var(--bg-surface)), radial-gradient(circle at 82% 8%, var(--action-accent-subtle), transparent 28rem), radial-gradient(circle at 8% 28%, color-mix(in srgb, var(--text-primary) 6%, transparent), transparent 34rem) }
+.secc-ambient::after { content: ""; position: absolute; inset: 0; z-index: -2; opacity: .36; background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--text-primary) 8%, transparent) 0 1px, transparent 1px 80px), repeating-linear-gradient(0deg, color-mix(in srgb, var(--text-primary) 6%, transparent) 0 1px, transparent 1px 80px); mask-image: linear-gradient(#000 0%, transparent 74%); -webkit-mask-image: linear-gradient(#000 0%, transparent 74%) }
+.hero-orbit { position: absolute; border: 1px solid var(--border); border-radius: 999px; opacity: .42; z-index: -1; pointer-events: none }
+.hero-orbit-a { width: 42rem; height: 42rem; top: 8rem; right: -13rem }
+.hero-orbit-b { width: 32rem; height: 32rem; bottom: 6rem; left: -12rem }
+
+/* Long legal text that shrinks with its container, not the viewport */
+.secc-disclaimer-long { container-type: inline-size; font-size: clamp(7px, 0.9cqi, 12px); color: var(--text-tertiary) }
+
+@media (hover: none) {
+  /* hover effects must not fire on touch */
+  .secc-panel:hover { border-color: var(--border); filter: none }
+}
+@media (pointer: coarse) {
+  button, [role="button"], a.secc-touch { min-height: var(--touch-min); min-width: var(--touch-min) }
+}

@@ -1,0 +1,115 @@
+/* SECC Tech — color. Dark-native, single blue accent, semantic severity family.
+   Legacy note: the original CSS named the accent --color-gold / --color-champagne
+   (a pre-rebrand gold theme retargeted to blue). Those names are dropped here;
+   accent is the only correct name. */
+:root {
+  /* ---- Surfaces (4 steps, deliberately low contrast: separation comes from the border) */
+  --bg-base: #070809;
+  --bg-surface: #0d0f14;
+  --bg-elevated: #14171f;
+  --color-ink: #070809;
+
+  /* namespaced mirrors — marketing site and logged-in app share values under
+     separate names so they can diverge later. Replicated from the source. */
+  --marketing-bg: var(--bg-base);
+  --marketing-surface: var(--bg-surface);
+  --marketing-text: var(--text-primary);
+  --marketing-accent: var(--accent);
+  --marketing-nav-bg: color-mix(in srgb, #070809 88%, transparent);
+  --app-bg: var(--bg-base);
+  --app-surface: var(--bg-surface);
+  --app-sidebar: var(--bg-surface);
+  --app-surface-hover: var(--bg-elevated);
+  --app-text: var(--text-primary);
+  --app-accent: var(--accent);
+  --app-border: var(--border);
+
+  /* ---- Text */
+  --text-primary: #f5f7fb;
+  --text-secondary: #b2bccb;
+  --text-tertiary: #78828f;
+  --color-white: #fff;
+
+  /* ---- Accent (single brand color, no secondary) */
+  --accent: #5b8bff;
+  --accent-hover: #7aa2ff;
+  --accent-deep: #1d4ed8;
+  --accent-fill: #1d4ed8;
+  --accent-fill-hover: #2b5ce6;
+  --accent-subtle: #5b8bff24;   /* 14% */
+  --accent-border: color-mix(in srgb, #5b8bff 34%, transparent); /* 34% */
+  --accent-glow: #5b8bff59;     /* 35% */
+  --focus-ring: #1d4ed8;
+  /* ambient-only auxiliary blue: untokenized in the source, used at 6–7% in backgrounds */
+  --accent-ambient: #4da3ff;
+
+  /* ---- Action */
+  --action-primary-bg: #e8ecf1;
+  --action-primary-bg-hover: #dce2e9;
+  --action-primary-text: #11161d;
+  --action-accent-fill: #1d4ed8;
+  --action-accent-fill-hover: #2b5ce6;
+  --action-accent: var(--accent);
+  --action-accent-subtle: var(--accent-subtle);
+  --action-danger-bg: #ff6b8a24;
+  --action-danger-text: #ff6b8a;
+
+  /* ---- Severity (--sev-*): five levels of gravity. The product's conceptual core. */
+  --sev-estavel: #3fb950;
+  --sev-monitor: #e3b341;
+  --sev-critico: #ff7b42;
+  --sev-intervencao: #ff5c53;
+  --sev-info: #6cb6ff;
+  --sev-estavel-bg: #3fb95024;
+  --sev-monitor-bg: #e3b34124;
+  --sev-critico-bg: #ff7b4224;
+  --sev-intervencao-bg: #ff5c5324;
+  --sev-info-bg: #6cb6ff24;
+
+  /* ---- Health bands (--band-*) */
+  --band-saudavel: #3fb950;
+  --band-atencao: #e3b341;
+  --band-alerta: #ff7b42;
+  --band-critico: #ff5c53;
+  --band-saudavel-bg: #3fb95024;
+  --band-atencao-bg: #e3b34124;
+  --band-alerta-bg: #ff7b4224;
+  --band-critico-bg: #ff5c5324;
+
+  /* ---- Process status (--status-*): dark, desaturated. Badge backgrounds, not text. */
+  --status-run: #1d4ed8;
+  --status-done: #13632b;
+  --status-success: #187a34;
+  --status-wait: #7a5200;
+  --status-error: #7a1f2b;  /* FIXED: the source shipped #7a5200 here, same as wait */
+  --status-expired: #606976;
+  --status-neutral: #616b79;
+
+  /* ---- App feedback (--app-*) */
+  --app-success: #3fb950;
+  --app-warning: #e3b341;
+  --app-danger: #ff6b8a;
+  --app-info: #6cb6ff;
+  --app-success-bg: #3fb95024;
+  --app-warning-bg: #e3b34124;
+  --app-danger-bg: #ff6b8a24;
+  --app-info-bg: #6cb6ff24;
+
+  /* ---- Borders */
+  --border: #ffffff17;          /* 9%  — divider, card border */
+  --border-strong: #ffffff2e;   /* 18% — emphasis */
+  --border-field: #ffffff47;    /* 28% — form field */
+  --glass-border: #ffffff1a;    /* 10% */
+  --glass-border-strong: #ffffff2e;
+  --color-border: var(--border);
+
+  /* ---- Semantic aliases */
+  --color-bg: var(--bg-base);
+  --surface-card: var(--bg-surface);
+  --surface-hover: var(--bg-elevated);
+  --text-body: var(--text-secondary);
+  --text-heading: var(--text-primary);
+  --text-meta: var(--text-tertiary);
+  --link: var(--accent);
+  --link-hover: var(--accent-hover);
+}

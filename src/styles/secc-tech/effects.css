@@ -1,0 +1,31 @@
+/* SECC Tech — glass, blur, shadow, glow.
+   Shadows are always doubled: one tight, one long and diffuse.
+   Blue glow only ever appears on an action element. */
+:root {
+  --blur-sm: 8px;
+  --blur-subtle: 12px;
+  --blur-md: 12px;
+  --blur-regular: 24px;
+  --blur-3xl: 64px;
+
+  --glass-surface: color-mix(in srgb, #0d0f14 86%, transparent);
+  --glass-elevated: color-mix(in srgb, #14171f 90%, transparent);
+  --glass-hover: color-mix(in srgb, #14171f 96%, transparent);
+
+  --shadow-surface: 0 1px 3px #00000080, 0 24px 70px #0000008c;
+  --app-shadow: var(--shadow-surface);
+  --glass-shadow: 0 1px 4px #11161d0f, 0 16px 48px #11161d1f;
+  --shadow-card: 0 12px 40px rgba(0, 0, 0, 0.28);
+
+  --glow-action: 0 0 14px rgba(29, 78, 216, 0.65);
+  --glow-cast: 0 12px 40px rgba(29, 78, 216, 0.5);
+  --glow-indicator: 0 0 8px rgba(91, 139, 255, 0.7);
+}
+
+/* Glass surface. The 160% saturation is what makes it read as glass and not grey fill. */
+.secc-glass {
+  background: var(--glass-surface);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(var(--blur-regular)) saturate(160%);
+}

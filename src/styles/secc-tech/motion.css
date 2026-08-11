@@ -1,0 +1,50 @@
+/* SECC Tech — motion. Vital-signs vocabulary: the product monitors a company in
+   crisis the way a monitor watches a patient. secc-ecg is the signature. */
+:root {
+  --dur-fast: 0.12s;
+  --mo-dur-1: 0.12s;
+  --dur-base: 0.22s;
+  --mo-dur-2: 0.22s;
+  --dur-slow: 0.4s;
+  --mo-dur-3: 0.4s;
+  --mo-dur-4: 0.64s;
+  --mo-dur-5: 0.9s;
+  --transition-default: 0.15s;
+  --mo-budget: 0.8s;
+
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --mo-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --mo-ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --mo-ease-scrub: linear;
+
+  --mo-dist-xs: 2px;
+  --mo-dist-sm: 8px;
+  --mo-dist-md: 16px;
+  --mo-dist-lg: 28px;
+
+  --stagger-tight: 40ms;
+  --stagger-base: 80ms;
+  --stagger-loose: 0.14s;
+}
+
+@keyframes secc-rise { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes fade-in { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes rise-in { from { opacity: 0; transform: translate3d(0, var(--mo-dist-lg), 0) } to { opacity: 1; transform: translate(0) } }
+@keyframes modal-in { from { opacity: 0; transform: scale(.95) translateY(-10px) } to { opacity: 1; transform: scale(1) translateY(0) } }
+@keyframes secc-breathe { 0%, 100% { opacity: .35; transform: scale(1) } 50% { opacity: 1; transform: scale(1.06) } }
+@keyframes secc-pulse { 0%, 100% { opacity: .4 } 50% { opacity: 1 } }
+@keyframes secc-sos-ring { 0% { opacity: .5; transform: scale(1) } 70%, 100% { opacity: 0; transform: scale(1.55) } }
+@keyframes secc-ecg { 0% { stroke-dashoffset: 2400px } 100% { stroke-dashoffset: -2400px } }
+@keyframes secc-grid-drift { 0% { transform: translate(0) } 100% { transform: translate(-32px, -32px) } }
+@keyframes secc-sweep { to { transform: rotate(360deg) } }
+@keyframes secc-bell-nudge { 0%, 84%, 100% { transform: rotate(0) } 87% { transform: rotate(-9deg) } 90% { transform: rotate(7deg) } 93% { transform: rotate(-5deg) } 96% { transform: rotate(3deg) } }
+
+/* Standard entrance, staggered by index: each item carries style="--i: 0 | 1 | 2 …" */
+.secc-enter { animation: secc-rise .55s var(--ease-out-expo) both; animation-delay: calc(.12s + var(--i, 0) * 90ms) }
+
+@media (prefers-reduced-motion: reduce) {
+  .secc-enter { animation-duration: 0.01ms; animation-delay: 0s }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important }
+}
