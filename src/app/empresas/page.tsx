@@ -9,7 +9,7 @@ export default function CompaniesPage() {
     <main className="shell page">
       <p className="eyebrow">Portfólio e cobertura</p>
       <h1>{portfolio.companies} empresas em diferentes estágios de pesquisa.</h1>
-      <p className="lede">A lista mestre combina casos prioritários do estudo acadêmico, empresas do universo de produção e uma fila de busca. A vitrine pública apresenta três recortes sanitizados; a base integral permanece protegida.</p>
+      <p className="lede">A lista mestre combina casos prioritários do estudo acadêmico, empresas do universo de produção e uma fila de busca. A vitrine pública apresenta {companies.length} recortes sanitizados; a base integral permanece protegida.</p>
 
       <section className="section public-kpis">
         <article><span>Tier 1</span><strong>{portfolio.tier1}</strong><small>casos do estudo acadêmico</small></article>

@@ -16,7 +16,7 @@ describe("snapshot público sanitizado", () => {
   it("mantém o hash do artefato reconciliado com o manifesto", () => {
     const contents = readFileSync(resolve(process.cwd(), "data/public/showcase.json"), "utf8").replace(/\r\n/g, "\n");
     const hash = createHash("sha256").update(contents, "utf8").digest("hex");
-    expect(hash).toBe(manifest.files["showcase.json"].sha256);
+    expect(hash).toBe(manifest.hashes["showcase.json"]);
   });
 
   it("não expõe caminhos locais, segredos ou estados finais indevidos", () => {

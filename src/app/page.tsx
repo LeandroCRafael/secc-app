@@ -39,7 +39,7 @@ export default function HomePage() {
       <section className="public-kpis" aria-label="Indicadores da plataforma">
         <article><span>Universo catalogado</span><strong>{portfolio.companies}</strong><small>empresas em três frentes de pesquisa</small></article>
         <article><span>Tier acadêmico</span><strong>{portfolio.tier1}</strong><small>casos prioritários para análise aprofundada</small></article>
-        <article><span>Registros empresa-ano</span><strong>900+</strong><small>linhas financeiras estruturadas</small></article>
+        <article><span>Registros empresa-ano</span><strong>{portfolio.financialCompanyYears}</strong><small>linhas financeiras estruturadas</small></article>
         <article><span>Modelo experimental</span><strong>t-1</strong><small>somente informação anterior ao evento</small></article>
       </section>
 
@@ -60,11 +60,11 @@ export default function HomePage() {
       </section>
 
       <section className="section public-heading">
-        <div><p className="eyebrow">Amostra real sanitizada</p><h2>Três casos para visualizar o método.</h2></div>
-        <p>Os recortes abaixo usam o exercício t-1 e permanecem identificados como “em conferência”. A série completa está na Curadoria.</p>
+        <div><p className="eyebrow">Amostra real sanitizada</p><h2>{companies.length} casos para visualizar o método.</h2></div>
+        <p>Os recortes usam o exercício t-1 e permanecem identificados como “em conferência”. A série completa está na Curadoria.</p>
       </section>
       <section className="grid three">
-        {companies.map((company) => (
+        {companies.slice(0, 6).map((company) => (
           <article className="card public-company-card" key={company.slug}>
             <div className="split"><span className="status under_review">Em conferência</span><small>{company.ticker}</small></div>
             <h3>{company.name}</h3>
@@ -74,6 +74,7 @@ export default function HomePage() {
           </article>
         ))}
       </section>
+      <div className="actions"><Link className="button" href="/empresas">Ver as {companies.length} empresas publicadas</Link></div>
 
       <section className="section public-source-panel">
         <div><p className="eyebrow">Fontes e conexões</p><h2>O dado não aparece sem linhagem.</h2><p>Cada fonte tem um papel operacional distinto: conexão, sincronização ou pesquisa documental.</p></div>

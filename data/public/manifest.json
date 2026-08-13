@@ -1,25 +1,21 @@
 {
-  "releaseId": "secc-public-showcase-2026-07-18",
-  "version": "showcase-2026.07",
-  "referenceDate": "2026-07-18",
-  "generatedAt": "2026-07-18T18:00:00-03:00",
-  "sourceBaseline": "secc-d1",
-  "schema": "secc-public-showcase-v1",
+  "version": "showcase-2026.08",
+  "referenceDate": "2026-08-13",
+  "generatedAt": "2026-08-13T18:19:23.633Z",
+  "releaseId": "secc-public-showcase-2026-08-13",
   "counts": {
     "portfolioCompanies": 192,
-    "publishedCompanyCases": 3,
+    "publishedCompanyCases": 22,
     "scoreDimensions": 6,
     "sources": 5
   },
-  "files": {
-    "showcase.json": {
-      "sha256": "63e7d93e85edee422414aa8e7863da3d7b842a6e106a4767cd51a0e142ed08c1"
-    }
+  "hashes": {
+    "showcase.json": "f7ed52032a42e6eb92328b955b3183d407f6253bcc3c8e5b615212e1cc05c497"
   },
-  "publicationDecision": "approved-for-public-showcase",
   "limitations": [
-    "Snapshot sanitizado; não contém arquivos brutos, caminhos locais, credenciais ou evidências privadas.",
-    "Casos identificados são recortes demonstrativos em conferência e não equivalem à release acadêmica final.",
-    "Score experimental sem calibração estatística ou uso decisório autorizado."
+    "A release pública é um recorte sanitizado e não reproduz a planilha mestre.",
+    "Os 22 casos exibidos ainda estão em conferência na base de pesquisa.",
+    "O score é heurístico, experimental e não foi calibrado como probabilidade de default.",
+    "O conteúdo tem finalidade acadêmica e informacional; não constitui rating, recomendação de crédito ou investimento."
   ]
 }
