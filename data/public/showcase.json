@@ -1,9 +1,9 @@
 {
   "release": {
-    "id": "secc-public-showcase-2026-08-13",
-    "version": "showcase-2026.08",
-    "referenceDate": "2026-08-13",
-    "generatedAt": "2026-08-13T18:19:23.633Z",
+    "id": "secc-public-showcase-2026-08-14",
+    "version": "showcase-2026.08.1",
+    "referenceDate": "2026-08-14",
+    "generatedAt": "2026-08-14T13:00:13.137Z",
     "baselineVersion": "secc-d1",
     "mappingVersion": "secc-map-v1",
     "scope": "Recorte público sanitizado para demonstração do produto. A base analítica completa permanece na área protegida."
@@ -21,8 +21,9 @@
     "marketCompanyYears": 430
   },
   "score": {
-    "version": "0.1.0-experimental",
+    "version": "0.1.1-experimental",
     "analysisWindow": "t-1",
+    "scale": "0–100 · maior = mais saudável",
     "minimumCoverage": 60,
     "minimumDimensions": 4,
     "dimensions": [
@@ -65,8 +66,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2017,
-      "score": 78,
-      "scoreBand": "Sinais muito elevados",
+      "score": 22,
+      "scoreBand": "Vermelho — alto risco",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 1700.8,
@@ -93,8 +94,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2018,
-      "score": 80,
-      "scoreBand": "Sinais muito elevados",
+      "score": 20,
+      "scoreBand": "Vermelho — alto risco",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 93.7,
@@ -121,8 +122,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2017,
-      "score": 37,
-      "scoreBand": "Atenção",
+      "score": 63,
+      "scoreBand": "Amarelo — atenção",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 1096.72,
@@ -149,8 +150,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2017,
-      "score": 35,
-      "scoreBand": "Atenção",
+      "score": 65,
+      "scoreBand": "Amarelo — atenção",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 665.74,
@@ -177,8 +178,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2018,
-      "score": 94,
-      "scoreBand": "Sinais muito elevados",
+      "score": 6,
+      "scoreBand": "Vermelho — alto risco",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 3688.72,
@@ -205,8 +206,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2017,
-      "score": 80,
-      "scoreBand": "Sinais muito elevados",
+      "score": 20,
+      "scoreBand": "Vermelho — alto risco",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 117.45,
@@ -233,8 +234,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2016,
-      "score": 87,
-      "scoreBand": "Sinais muito elevados",
+      "score": 13,
+      "scoreBand": "Vermelho — alto risco",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 68.85,
@@ -261,8 +262,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2017,
-      "score": 64,
-      "scoreBand": "Sinais elevados",
+      "score": 36,
+      "scoreBand": "Vermelho — alto risco",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 165.16,
@@ -289,8 +290,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2012,
-      "score": 94,
-      "scoreBand": "Sinais muito elevados",
+      "score": 6,
+      "scoreBand": "Vermelho — alto risco",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 619.69,
@@ -317,8 +318,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2013,
-      "score": 43,
-      "scoreBand": "Atenção",
+      "score": 57,
+      "scoreBand": "Amarelo — atenção",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 1041.16,
@@ -345,8 +346,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2013,
-      "score": 45,
-      "scoreBand": "Atenção",
+      "score": 55,
+      "scoreBand": "Amarelo — atenção",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 44.06,
@@ -373,8 +374,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2015,
-      "score": 37,
-      "scoreBand": "Atenção",
+      "score": 63,
+      "scoreBand": "Amarelo — atenção",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 27353.76,
@@ -401,8 +402,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2012,
-      "score": 57,
-      "scoreBand": "Sinais elevados",
+      "score": 43,
+      "scoreBand": "Vermelho — alto risco",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 433.77,
@@ -429,8 +430,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2018,
-      "score": 100,
-      "scoreBand": "Sinais muito elevados",
+      "score": 0,
+      "scoreBand": "Vermelho — alto risco",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 9.06,
@@ -457,8 +458,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2016,
-      "score": 94,
-      "scoreBand": "Sinais muito elevados",
+      "score": 6,
+      "scoreBand": "Vermelho — alto risco",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 247.23,
@@ -485,8 +486,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2012,
-      "score": 80,
-      "scoreBand": "Sinais muito elevados",
+      "score": 20,
+      "scoreBand": "Vermelho — alto risco",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 1862.78,
@@ -513,8 +514,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2017,
-      "score": 85,
-      "scoreBand": "Sinais muito elevados",
+      "score": 15,
+      "scoreBand": "Vermelho — alto risco",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 44.73,
@@ -541,8 +542,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2013,
-      "score": 30,
-      "scoreBand": "Atenção",
+      "score": 70,
+      "scoreBand": "Amarelo — atenção",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 2132.78,
@@ -569,8 +570,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2017,
-      "score": 43,
-      "scoreBand": "Atenção",
+      "score": 57,
+      "scoreBand": "Amarelo — atenção",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 1724.89,
@@ -597,8 +598,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2011,
-      "score": 94,
-      "scoreBand": "Sinais muito elevados",
+      "score": 6,
+      "scoreBand": "Vermelho — alto risco",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 264.81,
@@ -625,8 +626,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2015,
-      "score": 100,
-      "scoreBand": "Sinais muito elevados",
+      "score": 0,
+      "scoreBand": "Vermelho — alto risco",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 111.99,
@@ -653,8 +654,8 @@
       "collectionStatus": "Coletado — em conferência",
       "completion": 75,
       "analysisYear": 2016,
-      "score": 77,
-      "scoreBand": "Sinais muito elevados",
+      "score": 23,
+      "scoreBand": "Vermelho — alto risco",
       "scoreCoverage": 100,
       "metrics": {
         "revenue": 121.67,
@@ -700,7 +701,7 @@
   "limitations": [
     "A release pública é um recorte sanitizado e não reproduz a planilha mestre.",
     "Os 22 casos exibidos ainda estão em conferência na base de pesquisa.",
-    "O score é heurístico, experimental e não foi calibrado como probabilidade de default.",
+    "O índice é heurístico, experimental e não foi calibrado como probabilidade de default; a escala segue a convenção de mercado (0–100, maior = mais saudável).",
     "O conteúdo tem finalidade acadêmica e informacional; não constitui rating, recomendação de crédito ou investimento."
   ]
 }

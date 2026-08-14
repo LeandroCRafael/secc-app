@@ -28,7 +28,7 @@ export default function CompaniesPage() {
             <div className="split"><span className="status under_review">{company.collectionStatus}</span><small>{company.tier}</small></div>
             <h3>{company.name}</h3>
             <p>{company.entityType} · {company.sector}<br />Evento: {company.eventYear} · janela {company.collectionWindow}</p>
-            <div className="public-card-facts"><span>Cobertura da coleta <strong>{company.completion}%</strong></span><span>Score t-1 <strong>{company.score}/100</strong></span></div>
+            <div className="public-card-facts"><span>Cobertura da coleta <strong>{company.completion}%</strong></span><span>Índice t-1 <strong>{company.score}/100</strong></span></div>
             <Link className="button secondary" href={`/empresas/${company.slug}`}>Ver recorte Empresa 360</Link>
           </article>
         ))}

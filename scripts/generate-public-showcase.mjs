@@ -17,9 +17,9 @@ import path from "node:path";
 import process from "node:process";
 import ExcelJS from "exceljs";
 
-const SHOWCASE_VERSION = "showcase-2026.08";
+const SHOWCASE_VERSION = "showcase-2026.08.1";
 const MAPPING_VERSION = "secc-map-v1";
-const SCORE_VERSION = "0.1.0-experimental";
+const SCORE_VERSION = "0.1.1-experimental";
 const SEAL = "Coletado — em conferência";
 
 /** Whitelist v1 — Faixa A aprovada em 13/08/2026 (docs privados do workspace). */
@@ -72,7 +72,12 @@ const SCORE_DIMENSIONS = [
   { name: "FCO / receita", weight: 15 },
 ];
 
-const BAND_LABELS = { limited: "Sinais limitados", attention: "Atenção", elevated: "Sinais elevados", very_elevated: "Sinais muito elevados" };
+/**
+ * Convenção de mercado (decisão de 14/08/2026, RECONCILIACAO_REGRAS_ESCORE_2026-08):
+ * o índice publicado é saúde = 100 − pontos de sinal da heurística 0.1.0, com três
+ * bandas alinhadas ao E-Score MASTER: quanto maior, mais saudável.
+ */
+const BAND_LABELS = { green: "Verde — saudável", yellow: "Amarelo — atenção", red: "Vermelho — alto risco" };
 
 function parseArgs(argv) {
   const args = { referenceDate: null, mestre: null };
@@ -194,8 +199,9 @@ function computeScore(values) {
   const availableWeight = contributions.reduce((sum, item) => sum + item.maxPoints, 0);
   const eligible = availableWeight >= 60 && contributions.length >= 4;
   const rawPoints = contributions.reduce((sum, item) => sum + item.points, 0);
-  const score = eligible && availableWeight > 0 ? Math.round((rawPoints / availableWeight) * 100) : null;
-  const band = score === null ? null : score >= 75 ? "very_elevated" : score >= 50 ? "elevated" : score >= 25 ? "attention" : "limited";
+  const signalScore = eligible && availableWeight > 0 ? Math.round((rawPoints / availableWeight) * 100) : null;
+  const score = signalScore === null ? null : 100 - signalScore;
+  const band = score === null ? null : score >= 75 ? "green" : score >= 50 ? "yellow" : "red";
   return { contributions, availableWeight, score, band };
 }
 
@@ -355,6 +361,7 @@ async function main() {
     score: {
       version: SCORE_VERSION,
       analysisWindow: "t-1",
+      scale: "0–100 · maior = mais saudável",
       minimumCoverage: 60,
       minimumDimensions: 4,
       dimensions: SCORE_DIMENSIONS,
@@ -370,7 +377,7 @@ async function main() {
     limitations: [
       "A release pública é um recorte sanitizado e não reproduz a planilha mestre.",
       `Os ${companies.length} casos exibidos ainda estão em conferência na base de pesquisa.`,
-      "O score é heurístico, experimental e não foi calibrado como probabilidade de default.",
+      "O índice é heurístico, experimental e não foi calibrado como probabilidade de default; a escala segue a convenção de mercado (0–100, maior = mais saudável).",
       "O conteúdo tem finalidade acadêmica e informacional; não constitui rating, recomendação de crédito ou investimento.",
     ],
   };

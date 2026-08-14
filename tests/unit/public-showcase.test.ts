@@ -19,6 +19,17 @@ describe("snapshot público sanitizado", () => {
     expect(hash).toBe(manifest.hashes["showcase.json"]);
   });
 
+  it("segue a convenção de mercado: maior = mais saudável, três bandas", () => {
+    const bands = new Set(["Verde — saudável", "Amarelo — atenção", "Vermelho — alto risco"]);
+    for (const company of publicShowcase.companies) {
+      expect(company.score).toBeGreaterThanOrEqual(0);
+      expect(company.score).toBeLessThanOrEqual(100);
+      expect(bands.has(company.scoreBand)).toBe(true);
+      const expected = company.score >= 75 ? "Verde — saudável" : company.score >= 50 ? "Amarelo — atenção" : "Vermelho — alto risco";
+      expect(company.scoreBand).toBe(expected);
+    }
+  });
+
   it("não expõe caminhos locais, segredos ou estados finais indevidos", () => {
     const serialized = JSON.stringify(publicShowcase);
     expect(serialized).not.toMatch(/[A-Z]:\\\\/i);

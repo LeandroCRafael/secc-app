@@ -26,14 +26,13 @@ export default function MethodologyPage() {
         <article><span>04</span><div><h3>Testar cobertura</h3><p>O resultado só aparece com pelo menos {score.minimumCoverage}% do peso e {score.minimumDimensions} dimensões disponíveis.</p></div></article>
       </section>
 
-      <section className="section public-heading"><div><p className="eyebrow">Régua experimental</p><h2>Pesos e cortes documentados.</h2></div><p>Mais pontos representam maior intensidade dos sinais predefinidos. Não representam maior probabilidade estimada de default.</p></section>
-      <div className="table-wrap"><table><thead><tr><th>Dimensão</th><th>Peso máximo</th><th>Regra de pontuação</th></tr></thead><tbody>{rules.map(([name, weight, rule]) => <tr key={name}><td><strong>{name}</strong></td><td>{weight}</td><td>{rule}</td></tr>)}</tbody></table></div>
+      <section className="section public-heading"><div><p className="eyebrow">Régua experimental</p><h2>Pesos e cortes documentados.</h2></div><p>Cada dimensão acumula pontos de sinal quando o dado indica fragilidade. O índice publicado converte esses pontos para a convenção de mercado: índice = 100 − pontos de sinal, ou seja, quanto maior, mais saudável. A conversão não estima probabilidade de default.</p></section>
+      <div className="table-wrap"><table><thead><tr><th>Dimensão</th><th>Peso máximo</th><th>Regra de pontuação (pontos de sinal)</th></tr></thead><tbody>{rules.map(([name, weight, rule]) => <tr key={name}><td><strong>{name}</strong></td><td>{weight}</td><td>{rule}</td></tr>)}</tbody></table></div>
 
-      <section className="section grid four public-bands">
-        <article className="card"><span>0–24</span><h3>Sinais limitados</h3></article>
-        <article className="card"><span>25–49</span><h3>Atenção</h3></article>
-        <article className="card"><span>50–74</span><h3>Sinais elevados</h3></article>
-        <article className="card"><span>75–100</span><h3>Sinais muito elevados</h3></article>
+      <section className="section grid three public-bands">
+        <article className="card"><span>0–49</span><h3>Vermelho — alto risco</h3></article>
+        <article className="card"><span>50–74</span><h3>Amarelo — atenção</h3></article>
+        <article className="card"><span>75–100</span><h3>Verde — saudável</h3></article>
       </section>
 
       <section className="section public-method-boundary">
@@ -41,7 +40,7 @@ export default function MethodologyPage() {
         <div><p className="eyebrow">O que o score não faz</p><h2>Não autoriza decisão de crédito.</h2><ul><li>não estima probabilidade de default;</li><li>não foi calibrado ou validado fora da amostra;</li><li>não incorpora ainda governança, mercado e contexto jurídico;</li><li>não constitui rating ou recomendação.</li></ul></div>
       </section>
 
-      <section className="section notice">Versão de referência: {release.referenceDate}. Próximo gate metodológico: definir variável-alvo, amostra de validação, tratamento de ausentes, estabilidade temporal e critérios de recalibração.</section>
+      <section className="section notice">Versão de referência: {release.referenceDate}. A escala e as bandas seguem a convenção do SECC E-Score em desenvolvimento (modelo preditivo calibrado para o Brasil); este índice heurístico será substituído por ele após calibração e validação. Próximo gate metodológico: definir variável-alvo, amostra de validação, tratamento de ausentes, estabilidade temporal e critérios de recalibração.</section>
     </main>
   );
 }

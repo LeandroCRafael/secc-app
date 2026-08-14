@@ -30,7 +30,7 @@ export default async function CompanyPage({ params }: { params: Promise<{ slug: 
           <p className="lede">{company.ticker} · {company.sector} · evento de referência em {company.eventYear}. O recorte usa somente o exercício anterior ao evento.</p>
           <span className="status under_review">{company.collectionStatus}</span>
         </div>
-        <div className="public-score-panel"><span>Índice de sinais t-1</span><strong>{company.score}</strong><small>{company.scoreBand}<br />cobertura {company.scoreCoverage}%</small></div>
+        <div className="public-score-panel"><span>Índice experimental t-1</span><strong>{company.score}</strong><small>{company.scoreBand}<br />cobertura {company.scoreCoverage}%</small></div>
       </div>
 
       <section className="section public-kpis">
@@ -51,7 +51,7 @@ export default async function CompanyPage({ params }: { params: Promise<{ slug: 
       </div>
 
       <section className="section grid two">
-        <article className="card"><p className="eyebrow">Como o score lê o caso</p><h3>O resultado resume intensidade, não probabilidade.</h3><p>O índice combina seis sinais em uma régua de 0 a 100. Quanto maior, maior a intensidade dos sinais contábeis definidos na metodologia experimental. O resultado não estima default.</p><Link className="text-link" href="/metodologia">Ver pesos, cortes e limitações →</Link></article>
+        <article className="card"><p className="eyebrow">Como o índice lê o caso</p><h3>O resultado resume saúde contábil, não probabilidade.</h3><p>O índice combina seis dimensões em uma régua de 0 a 100 na convenção de mercado: quanto maior, mais saudável o quadro contábil em t-1 segundo a metodologia experimental. O resultado não estima default.</p><Link className="text-link" href="/metodologia">Ver pesos, cortes e limitações →</Link></article>
         <article className="card"><p className="eyebrow">Fonte e escopo</p><h3>Recorte verificável, exposição controlada.</h3><p>{company.sourceSummary}</p><p className="muted">{company.publicNote}</p><a className="text-link" href={company.sourceUrl} rel="noreferrer" target="_blank">Consultar fonte institucional →</a></article>
       </section>
 

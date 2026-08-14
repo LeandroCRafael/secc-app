@@ -69,7 +69,7 @@ export default function HomePage() {
             <div className="split"><span className="status under_review">Em conferência</span><small>{company.ticker}</small></div>
             <h3>{company.name}</h3>
             <p>{company.sector} · evento em {company.eventYear}</p>
-            <div className="public-score"><strong>{company.score}</strong><span>/100<br />índice de sinais</span></div>
+            <div className="public-score"><strong>{company.score}</strong><span>/100<br />índice experimental</span></div>
             <Link className="button secondary" href={`/empresas/${company.slug}`}>Ver recorte Empresa 360</Link>
           </article>
         ))}

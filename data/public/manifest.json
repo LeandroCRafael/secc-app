@@ -1,8 +1,8 @@
 {
-  "version": "showcase-2026.08",
-  "referenceDate": "2026-08-13",
-  "generatedAt": "2026-08-13T18:19:23.633Z",
-  "releaseId": "secc-public-showcase-2026-08-13",
+  "version": "showcase-2026.08.1",
+  "referenceDate": "2026-08-14",
+  "generatedAt": "2026-08-14T13:00:13.137Z",
+  "releaseId": "secc-public-showcase-2026-08-14",
   "counts": {
     "portfolioCompanies": 192,
     "publishedCompanyCases": 22,
@@ -10,12 +10,12 @@
     "sources": 5
   },
   "hashes": {
-    "showcase.json": "f7ed52032a42e6eb92328b955b3183d407f6253bcc3c8e5b615212e1cc05c497"
+    "showcase.json": "6096c8a6d024b3396c0e1c520c75a9f1a5bee3bc1c468929393a6427be313485"
   },
   "limitations": [
     "A release pública é um recorte sanitizado e não reproduz a planilha mestre.",
     "Os 22 casos exibidos ainda estão em conferência na base de pesquisa.",
-    "O score é heurístico, experimental e não foi calibrado como probabilidade de default.",
+    "O índice é heurístico, experimental e não foi calibrado como probabilidade de default; a escala segue a convenção de mercado (0–100, maior = mais saudável).",
     "O conteúdo tem finalidade acadêmica e informacional; não constitui rating, recomendação de crédito ou investimento."
   ]
 }
