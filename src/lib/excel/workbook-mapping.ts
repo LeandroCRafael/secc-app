@@ -12,7 +12,9 @@ import type {
 } from "./sync-contracts";
 
 export const workbookId = "secc-master-workbook";
-export const workbookMappingVersion = "secc-map-v1";
+// v2 (17/08/2026): adiciona D&A (DFC 6.01) na coluna AC da Aba 02 — Etapa 4 da
+// reconciliação com o E-Score MASTER. EBITDA = EBIT + D&A é derivado, nunca armazenado.
+export const workbookMappingVersion = "secc-map-v2";
 export const workbookMaxBytes = 4 * 1024 * 1024;
 const workbookMaxUncompressedBytes = 64 * 1024 * 1024;
 const workbookMaxEntries = 2_000;
@@ -85,6 +87,7 @@ const definitions: ColumnDefinition[] = [
   definition(financialSheet, 25, "Variação líquida caixa (6.04)", "Variação de Caixa", "BRL_millions", ["Variação líquida de caixa"]),
   definition(financialSheet, 26, "Despesas com Pessoal", "Despesas com Pessoal", "BRL_millions"),
   definition(financialSheet, 27, "Headcount", "Headcount", "count"),
+  definition(financialSheet, 29, "D&A (DFC 6.01)", "D&A", "BRL_millions", ["Depreciação e Amortização", "Depreciacao e Amortizacao"]),
   definition(qualitativeSheet, 3, "Auditor", "Auditor", "text"),
   definition(qualitativeSheet, 4, "Opinião auditor", "Opinião auditor", "text", ["Opinião do auditor"]),
   definition(qualitativeSheet, 5, "Going Concern flag", "Going Concern flag", "text", ["Going concern"]),
