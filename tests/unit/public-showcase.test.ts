@@ -7,8 +7,9 @@ import { publicShowcase } from "@/features/public/public-showcase";
 
 describe("snapshot público sanitizado", () => {
   it("reconcilia contagens e pesos declarados", () => {
-    expect(publicShowcase.portfolio.companies).toBe(192);
-    expect(publicShowcase.portfolio.tier1 + publicShowcase.portfolio.tier2 + publicShowcase.portfolio.toResearch).toBe(192);
+    // 193 desde 18/08/2026: cadastro ganhou "Casas Bahia (2ª)" (RJ pedida em ago/2026)
+    expect(publicShowcase.portfolio.companies).toBe(193);
+    expect(publicShowcase.portfolio.tier1 + publicShowcase.portfolio.tier2 + publicShowcase.portfolio.toResearch).toBe(193);
     expect(publicShowcase.companies).toHaveLength(manifest.counts.publishedCompanyCases);
     expect(publicShowcase.score.dimensions.reduce((sum, item) => sum + item.weight, 0)).toBe(100);
   });

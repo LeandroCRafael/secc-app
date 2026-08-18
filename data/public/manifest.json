@@ -1,16 +1,16 @@
 {
   "version": "showcase-2026.08.1",
-  "referenceDate": "2026-08-14",
-  "generatedAt": "2026-08-14T13:00:13.137Z",
-  "releaseId": "secc-public-showcase-2026-08-14",
+  "referenceDate": "2026-08-18",
+  "generatedAt": "2026-08-18T21:53:10.232Z",
+  "releaseId": "secc-public-showcase-2026-08-18",
   "counts": {
-    "portfolioCompanies": 192,
+    "portfolioCompanies": 193,
     "publishedCompanyCases": 22,
     "scoreDimensions": 6,
     "sources": 5
   },
   "hashes": {
-    "showcase.json": "6096c8a6d024b3396c0e1c520c75a9f1a5bee3bc1c468929393a6427be313485"
+    "showcase.json": "69b092b88d0dfd8ad2c01032dd0fd33ce6adffc304961064aaefde1be8f57c7e"
   },
   "limitations": [
     "A release pública é um recorte sanitizado e não reproduz a planilha mestre.",
