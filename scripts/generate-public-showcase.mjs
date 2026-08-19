@@ -17,7 +17,7 @@ import path from "node:path";
 import process from "node:process";
 import ExcelJS from "exceljs";
 
-const SHOWCASE_VERSION = "showcase-2026.08.1";
+const SHOWCASE_VERSION = "showcase-2026.08.2";
 const MAPPING_VERSION = "secc-map-v1";
 const SCORE_VERSION = "0.1.1-experimental";
 const SEAL = "Coletado — em conferência";
