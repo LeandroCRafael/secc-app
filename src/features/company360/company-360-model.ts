@@ -282,9 +282,23 @@ function summary(
   return `A versão ${baseline.workbookVersion} sustenta ${available} observação(ões) disponíveis para esta empresa. A leitura abaixo separa valores sincronizados de propostas ainda sujeitas a revisão.`;
 }
 
-export function selectPilotCompanies(companies: CompanyDiagnostic[], limit = 8): string[] {
+/**
+ * Coorte elegível por cobertura (substitui a coorte piloto fixa de 8 do Incremento 5,
+ * decisão de 19/08/2026 após a reconciliação da base): entram todas as empresas com
+ * evento definido e pelo menos metade do financeiro esperado preenchido. A ordenação
+ * por qualidade de cobertura permanece para escolhas-padrão (ex.: comparador).
+ */
+export function selectPilotCompanies(companies: CompanyDiagnostic[], limit = Number.POSITIVE_INFINITY): string[] {
   return companies
-    .filter((company) => !company.name.trim().startsWith("(") && Boolean(company.eventYear))
+    .filter((company) => {
+      if (company.name.trim().startsWith("(") || !company.eventYear) return false;
+      const coverage = company.coverage;
+      const financialRate =
+        coverage && coverage.financialExpected > 0
+          ? coverage.financialFilled / coverage.financialExpected
+          : 0;
+      return financialRate >= 0.5;
+    })
     .map((company) => {
       const coverage = company.coverage;
       const financialRate =

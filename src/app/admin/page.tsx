@@ -159,11 +159,11 @@ export default async function AdminDashboardPage() {
       <section className="dashboard-callout">
         <div>
           <p className="eyebrow">Incremento 5</p>
-          <h2>A coorte piloto transforma cobertura em diagnóstico por empresa.</h2>
+          <h2>A coorte elegível por cobertura transforma dados em diagnóstico por empresa.</h2>
         </div>
         <ol>
           <li>Aplicar a primeira linha de base da planilha na sincronização controlada.</li>
-          <li>Validar séries, indicadores e fontes nas oito Empresas 360 piloto.</li>
+          <li>Validar séries, indicadores e fontes nas Empresas 360 da coorte elegível.</li>
           <li>Reutilizar o mesmo catálogo de métricas no comparador do Incremento 6.</li>
         </ol>
       </section>

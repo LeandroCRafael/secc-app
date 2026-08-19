@@ -65,7 +65,7 @@ export function ComparisonView({
     <form className="comparator-selector" method="get">
       <div className="panel-heading"><div><p className="eyebrow">Recorte</p><h2>Selecione empresas e métrica</h2></div><button className="button" type="submit">Atualizar comparação</button></div>
       <fieldset className="comparator-company-options">
-        <legend>Coorte piloto</legend>
+        <legend>Coorte elegível por cobertura</legend>
         {pilotCompanies.map((company) => <label key={company.id} className={selectedIds.includes(company.id) ? "selected" : undefined}>
           <input defaultChecked={selectedIds.includes(company.id)} name="empresa" type="checkbox" value={company.id}/>
           <span><strong>{company.name}</strong><small>{company.sector} · {company.eventYear ?? "evento pendente"}</small></span>
@@ -76,7 +76,7 @@ export function ComparisonView({
     </form>
 
     <section className="comparator-summary" aria-label="Resumo da comparação">
-      <article><span>Empresas selecionadas</span><strong>{model.companies.length}</strong><small>coorte piloto controlada</small></article>
+      <article><span>Empresas selecionadas</span><strong>{model.companies.length}</strong><small>coorte elegível por cobertura</small></article>
       <article><span>Comparáveis na métrica</span><strong>{model.comparableCompanies}</strong><small>ao menos dois períodos válidos</small></article>
       <article><span>Séries controladas</span><strong>{model.controlledCompanies}</strong><small>três ou mais períodos</small></article>
       <article><span>Mudanças pendentes</span><strong>{model.pendingChanges}</strong><small>não entram nos cálculos</small></article>

@@ -83,7 +83,7 @@ export function Company360View({ model }: { model: Company360Model }) {
         <div>
           <div className="company360-kicker">
             <span className="eyebrow">Empresa 360 · incremento 5</span>
-            {model.isPilot && <span className="status available">Coorte piloto</span>}
+            {model.isPilot && <span className="status available">Coorte elegível</span>}
           </div>
           <h2 id="company360-heading">Diagnóstico financeiro e qualidade da evidência.</h2>
           <p>{model.executiveSummary}</p>
