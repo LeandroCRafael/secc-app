@@ -176,7 +176,7 @@ export default async function MasterCompaniesPage({
                         <strong>
                           {company.name}{" "}
                           {pilotIds.has(company.id) && (
-                            <span className="status available">Piloto</span>
+                            <span className="status available">Elegível</span>
                           )}
                         </strong>
                         <span>Abrir Empresa 360 →</span>
